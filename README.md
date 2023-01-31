@@ -1,4 +1,4 @@
-# Triple A
+# Chatify
 
 Klone das Repository mit folgendem Befehl:
 
@@ -8,6 +8,7 @@ git clone https://github.com/IlyaFreydkin/Chatify.git
 
 ## Kurzbeschreibung
 
+Chatify ist eine Single Page Application zum live Video chatten
 
 
 
