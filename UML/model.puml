@@ -1,0 +1,25 @@
+@startuml "Model"
+entity User
+{
+    + User_Id : int 
+    + Username : string
+    + Password : string
+    + Email : string
+}
+enum Userrole
+{
+    + Admin
+    + User
+}
+entity Profile 
+{
+    + Profile_Id : int 
+    + Firstname : string
+    + Lastname : string
+    + Description : string  
+    + DateOfJoin : DateTime
+}
+
+User o-- Userrole
+User ||-- Profile
+@enduml
