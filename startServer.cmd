@@ -1,9 +1,6 @@
-@echo off
-FOR %%d IN (webapi) DO (
-    rd /S /Q "%%d/bin" 2> nul 
-    rd /S /Q "%%d/obj" 2> nul
-    rd /S /Q "%%d/.vs" 2> nul
-    rd /S /Q "%%d/.vscode" 2> nul
-)
-cd webapi
-dotnet watch run -c Debug
+docker rm -f mariadb_chatify 2> nul
+docker run --name mariadb_chatify -d -p 13307:3306 -e MARIADB_USER=root -e 
+MARIADB_ROOT_PASSWORD=password 
+mariadb:10.10.2
+dotnet build ChatifyProject/ChatifyProject.Webapi --no-incremental --force
+dotnet run -c Debug --project ChatifyProject/ChatifyProject.Webapi
