@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TripleAProject.Webapi.Model
+namespace TripleAProject.Application.Model
 {
     public enum Userrole
     {
