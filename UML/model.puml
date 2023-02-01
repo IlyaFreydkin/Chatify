@@ -1,10 +1,11 @@
 @startuml "Model"
 entity User
 {
-    + User_Id : int 
-    + Username : string
+    + Id : int 
+    + Name : string
     + Password : string
     + Email : string
+    + Role : Userrole
 }
 enum Userrole
 {
@@ -13,7 +14,7 @@ enum Userrole
 }
 entity Profile 
 {
-    + Profile_Id : int 
+    + Id : int 
     + Firstname : string
     + Lastname : string
     + Description : string  

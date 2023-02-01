@@ -65,4 +65,10 @@ Nach dem Starten des Servers kann im Browser die Seite **http://localhost:5000**
 aufgerufen werden. Falls die Meldung erscheint, dass das Zertifikat nicht geprüft werden kann,
 muss mit *Fortsetzen* bestätigt werden.
 
-
+## Info für Mitglieder
+ 
+Führe den Befehl aus, um eine Docker zu erstellen
+```
+docker run --name mariadb_chatify -d -p 13307:3306 -e MARIADB_USER=root -e MARIADB_ROOT_PASSWORD=password mariadb:10.10.2
+```
+(Hinweis: Bei Dbeaver darf bei Name nichts stehen)
