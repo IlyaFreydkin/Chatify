@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 var builder = WebApplication.CreateBuilder(args);
 if (builder.Environment.IsDevelopment())
-{
+{   
     builder.Services.AddCors(options =>
     {
         options.AddDefaultPolicy(
