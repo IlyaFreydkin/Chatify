@@ -1,7 +1,6 @@
-**/bin
-**/obj
 **/.vs
 **/.vscode
+**/bin
+**/obj
 **/node_modules
-**/.db*
-**/.user.json
+*.db*
