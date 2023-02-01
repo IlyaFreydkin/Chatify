@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
-namespace TripleAProject.Webapi.Model
+namespace Model
 {
     [Index(nameof(Email), IsUnique = true)]
     public class User
