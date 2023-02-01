@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using TripleAProject.Application.Model;
 using TripleAProject.Webapi.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
-using TripleAProject.Webapi.Model;
 
 namespace TripleAProject.Application.Dto
 {
@@ -19,6 +19,18 @@ namespace TripleAProject.Application.Dto
     [EmailAddress]
     string Email,
     [Range(0, 1, ErrorMessage = "Range der Userrole ist ungültig")]
-    Userrole Role);
+    Userrole Role,
+    
+    Guid ProfileGuid) : IValidatableObject
+    {
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        var db = validationContext.GetRequiredService<ChatifyContext>();
+        if (!db.Profiles.Any(a => a.Guid == ProfileGuid))
+        {
+            yield return new ValidationResult("Profile does not exist", new[] { nameof(ProfileGuid) });
+        }
+    }
+}
 }
 

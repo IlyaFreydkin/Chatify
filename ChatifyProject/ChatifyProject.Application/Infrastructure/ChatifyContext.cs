@@ -2,15 +2,16 @@ using Bogus;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-
+using TripleAProject.Application.Model;
 
 namespace TripleAProject.Webapi.Infrastructure
 {
-    public class AAAContext : DbContext
+    public class ChatifyContext : DbContext
     {
-        public AAAContext(DbContextOptions opt) : base(opt) { }
+        public ChatifyContext(DbContextOptions opt) : base(opt) { }
 
         public DbSet<User> Users => Set<User>();
+        public DbSet<Profile> Profiles => Set<Profile>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

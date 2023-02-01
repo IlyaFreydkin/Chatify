@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Model
+namespace TripleAProject.Application.Model
 {
     [Index(nameof(Email), IsUnique = true)]
     public class User
@@ -35,6 +35,7 @@ namespace Model
         public Userrole Role { get; set; }
         public DateTime Created { get; set; }
         public Guid Guid { get; set; }
+        public Profile? Profile {get; set; }
         public string Salt { get; set; }
         public string PasswordHash { get; set; }
         

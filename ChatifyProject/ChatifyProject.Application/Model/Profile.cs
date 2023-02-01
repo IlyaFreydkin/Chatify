@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Model
+namespace TripleAProject.Application.Model
 {
     public class Profile
     {
@@ -31,5 +31,5 @@ namespace Model
         public string Description { get; set; }
         [Range(0,1)]
         public Guid Guid { get; set; }
-        public string Salt { get; set; }
+        public User User {get; set; }
 }
