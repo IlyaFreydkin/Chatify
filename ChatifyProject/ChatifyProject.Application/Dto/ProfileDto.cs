@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using TripleAProject.Webapi.Infrastructure;
+using ChatifyProject.Application.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TripleAProject.Application.Dto
+namespace ChatifyProject.Application.Dto
 {
     public record ProfileDto(
     Guid Guid,

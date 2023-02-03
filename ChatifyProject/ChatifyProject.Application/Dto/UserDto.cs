@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using TripleAProject.Application.Model;
-using TripleAProject.Webapi.Infrastructure;
+using ChatifyProject.Application.Model;
+using ChatifyProject.Application.Infrastructure;
 
-namespace TripleAProject.Application.Dto
+namespace ChatifyProject.Application.Dto
 {
     public record UserDto(
     Guid Guid,

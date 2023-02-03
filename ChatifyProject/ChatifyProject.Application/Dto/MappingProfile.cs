@@ -1,21 +1,14 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TripleAProject.Webapi.Model;
+using ChatifyProject.Application.Model;
 
-namespace TripleAProject.Application.Dto
+namespace ChatifyProject.Application.Dto
 {
     public class MappingProfile : Profile  // using AutoMapper;
     {
         public MappingProfile()
         {
-            CreateMap<MovieDto, Movie>();
-            CreateMap<Movie, MovieDto>(); 
-            CreateMap<MovieRatingDto, MovieRating>();
-            CreateMap<MovieRating, MovieRatingDto>(); 
+            CreateMap<ProfileDto, Profile>();
+            CreateMap<Profile, ProfileDto>();
             CreateMap<UserDto, User>();
             CreateMap<User, UserDto>();
         }

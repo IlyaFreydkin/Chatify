@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
-namespace TripleAProject.Application.Model
+namespace ChatifyProject.Application.Model
 {
     [Index(nameof(Email), IsUnique = true)]
     public class User

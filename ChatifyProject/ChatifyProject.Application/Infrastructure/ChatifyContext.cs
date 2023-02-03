@@ -1,10 +1,11 @@
 using Bogus;
+using ChatifyProject.Application.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using TripleAProject.Application.Model;
 
-namespace TripleAProject.Webapi.Infrastructure
+namespace ChatifyProject.Application.Infrastructure
 {
     public class ChatifyContext : DbContext
     {
