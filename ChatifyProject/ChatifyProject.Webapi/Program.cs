@@ -31,7 +31,7 @@ builder.Services
             OnMessageReceived = context =>
             {
                 // Extract Token from WS Request /chessHub?token=......
-                var accessToken = context.Request.Query["token"];
+                var accessToken = context.Request.Query["access_token"];
                 if (string.IsNullOrEmpty(accessToken)) { return Task.CompletedTask; }
                 var path = context.HttpContext.Request.Path;
                 if (context.HttpContext.Request.Path.StartsWithSegments("/chatHub"))

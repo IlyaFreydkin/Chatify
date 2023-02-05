@@ -1,5 +1,5 @@
 {
-  "name": "tripleaproject-client",
+  "name": "chatify-client",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -14,7 +14,9 @@
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/vue-fontawesome": "^3.0.2",
+    "@microsoft/signalr": "^7.0.2",
     "axios": "^1.2.3",
+    "bootstrap": "^5.2.3",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
     "vuex": "^4.1.0"
