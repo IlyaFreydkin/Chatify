@@ -6,12 +6,12 @@
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.*" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ChatifyProject.Application\ChatifyProject.Application.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ChatifyProject.Application\ChatifyProject.Application.csproj" />
+	</ItemGroup>
 
 </Project>

@@ -4,3 +4,5 @@
 **/obj
 **/node_modules
 *.db*
+appsettings.Development.json
+package-lock.json

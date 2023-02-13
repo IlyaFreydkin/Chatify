@@ -11,64 +11,79 @@ git clone https://github.com/IlyaFreydkin/Chatify.git
 Chatify ist eine Single Page Application zum live Video chatten
 
 
-
-
 ## Teammitglieder
 
-| Name                    | Email                  | Aufgabenbereich                         |
-| ----------------------- | ---------------------- | --------------------------------------- |
-| Ilya *Freydkin*, 3CHIF | fre22343@spengergasse.at | |
-| Richard *Liu*, 3CHIF | liu2291@spengergasse.at | |
-| Uros *Veljic*, 3CHIF | vel22675@spengergasse.at |  |
-| Janus *Messner*, 3CHIF | mes22377@spengergasse.at |  |
-| Mohamed *Ahmed*, 3CHIF | ahm22106@spengergasse.at | |
+| Name                   | Email                    | Aufgabenbereich |
+| ---------------------- | ------------------------ | --------------- |
+| Ilya *Freydkin*, 3CHIF | fre22343@spengergasse.at |                 |
+| Richard *Liu*, 3CHIF   | liu2291@spengergasse.at  |                 |
+| Uros *Veljic*, 3CHIF   | vel22675@spengergasse.at |                 |
+| Janus *Messner*, 3CHIF | mes22377@spengergasse.at |                 |
+| Mohamed *Ahmed*, 3CHIF | ahm22106@spengergasse.at |                 |
 
 ## Voraussetzungen
 
-Das Projekt verwendet .NET in der Version >= 6. Prüfe mit folgendem Befehl, ob die .NET SDK in der
-Version 6 oder 7 am Rechner installiert ist:
+Das Projekt verwendet .NET in der Version >= 6 und Docker. Prüfe mit folgendem Befehl, ob die .NET
+SDK in der Version 6 oder 7 und Docker am Rechner installiert sind:
 
 ```
 dotnet --version
-```
-
-Die .NET 6 SDK (LTS Version) kann von https://dotnet.microsoft.com/en-us/download/dotnet/6.0 für alle
-Plattformen geladen werden.
-
-Zum Prüfen der Docker Installation kann der folgende Befehl verwendet werden. Er muss die Version
-zurückgeben:
-
-```
 docker --version
 ```
 
-Im Startskript wird der Container geladen, bevor der Server gestartet wird.
+## Backend einrichten
 
-## Starten des Programmes
+### appsettings.Development.json
 
-Führe nach dem Klonen im Terminal den folgenden Befehl aus, um den Server zu starten.
+Lege im Verzeichnis *tschess/tschess.Backend* die Datei *appsettings.Development.json* an.
+
+- Generiere ein Secret auf https://generate.plus/en/base64 mit 128 Bytes Länge und schreibe es in *JwtSecret*.
+- Schreibe deinen AD User in *Searchuser* und *Searchpass*. Die Datei *appsettings.Development.json*
+  wird deswegen nicht in das Repository übertragen.
+- Lokale Admins können *mit , getrennt* (kein Array) hinterlegt werden. Diese Account bekommen die
+  Rolle *Management* im JWT.
+
+```javascript
+{
+  "ConnectionStrings": {
+    "SqlServer": "Server=127.0.0.1,1433;Initial Catalog=ChatifyDb;User Id=sa;Password=SqlServer2019"
+  },
+  "Searchuser": "",
+  "Searchpass": "",
+  "JwtSecret": "",
+  "LocalAdmins": "",
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning",
+      "Microsoft.EntityFrameworkCore.Database.Command": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
+```
+
+### Controller für die AD Authentifizierung
+
+**POST /api/user/login** mit `{"username": "myUser", "password": "myPassword"}` liefert ein JSON
+Object mit der User ID und dem Token zurück. Wurde ein Suchuser hinterlegt, wird im Development
+Mode das Passwort nicht validiert und es werden die Daten des anderen Users zurückgegeben.
+
+**GET /api/user/me** braucht im Header den Bearer Token. Die Route liefert die gespeicherten
+Daten im Token zurück (Rolle, Klasse, ...)
+
+## Starten des Servers
+
+Das Programm verwendet ein SQL Server Docker Image für die Speicherung der Daten. Es wird beim
+Programmstart automatisch geladen.
 
 **Windows**
-
 ```
 startServer.cmd
 ```
 
-**macOS, Linux**
-
+**macOs, Linux**
 ```
-chmod 777 startServer.sh
+chmod a+x startServer.sh
 ./startServer.sh
 ```
-
-Nach dem Starten des Servers kann im Browser die Seite **http://localhost:5000**
-aufgerufen werden. Falls die Meldung erscheint, dass das Zertifikat nicht geprüft werden kann,
-muss mit *Fortsetzen* bestätigt werden.
-
-## Info für Mitglieder
- 
-Führe den Befehl aus, um eine Docker zu erstellen
-```
-docker run --name mariadb_chatify -d -p 13307:3306 -e MARIADB_USER=root -e MARIADB_ROOT_PASSWORD=password mariadb:10.10.2
-```
-(Hinweis: Bei Dbeaver darf bei Name nichts stehen)

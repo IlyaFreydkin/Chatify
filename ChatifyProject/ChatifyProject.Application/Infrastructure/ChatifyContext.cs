@@ -3,7 +3,6 @@ using ChatifyProject.Application.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using TripleAProject.Application.Model;
 
 namespace ChatifyProject.Application.Infrastructure
 {
@@ -12,7 +11,7 @@ namespace ChatifyProject.Application.Infrastructure
         public ChatifyContext(DbContextOptions opt) : base(opt) { }
 
         public DbSet<User> Users => Set<User>();
-        public DbSet<Profile> Profiles => Set<Profile>();
+        public DbSet<Userprofile> Profiles => Set<Userprofile>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,7 +45,6 @@ namespace ChatifyProject.Application.Infrastructure
                 return new User(
                     name: f.Name.LastName().ToLower(),
                     email: $"{f.Name.FirstName()}@gmail.at",
-                    password: "1111",
                     role: f.PickRandom<Userrole>())
 
                 { Guid = f.Random.Guid() };
