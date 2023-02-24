@@ -14,15 +14,17 @@ namespace ChatifyProject.Application.Model
         protected User() { }
 #pragma warning restore CS8618
 
-        public User(string name, string email, Userrole role)
+        public User(string name, string password, string email, Userrole role)
         {
             Name = name;
+            SetPassword(password);
             Email = email;
             Role = role;
         }
         public int Id { get; private set; }
         public Guid Guid { get; set; }
         public string Name { get; set; }
+        public string? Password { get; set; }
         public string Email { get; set; }
         public Userrole Role { get; set; }
         public DateTime Created { get; set; }

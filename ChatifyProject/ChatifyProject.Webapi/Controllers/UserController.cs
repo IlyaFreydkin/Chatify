@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using ChatifyProject.Application.Dto;
 using ChatifyProject.Application.Infrastructure;
+using ChatifyProject.Application.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
@@ -20,9 +23,9 @@ public class UserController : ControllerBase
     public record CredentialsDto(string username, string password);
 
     private readonly ChatifyContext _db;
-    private readonly IMapper _mapper;
     private readonly IConfiguration _config;
     private readonly bool _isDevelopment;
+    private readonly IMapper _mapper;
 
     public UserController(IHostEnvironment _env, IConfiguration config, IMapper mapper, ChatifyContext db)
     {
@@ -36,7 +39,7 @@ public class UserController : ControllerBase
     /// POST /api/user/login
     /// </summary>
     [HttpPost("login")]
-    public IActionResult Login([FromBody] CredentialsDto credentials)
+    public IActionResult Login([FromBody] CredentialsDto credentials, UserDto userdto)
     {
         var lifetime = TimeSpan.FromHours(3);
         var searchuser = _config["Searchuser"];
@@ -51,9 +54,13 @@ public class UserController : ControllerBase
         var currentUser = service.CurrentUser;
         if (currentUser is null) { return Unauthorized(); }
         //TODO: Add user to your db if not exist
+        var localuser = new User(userdto.Name, userdto.Password, userdto.Email, userdto.Role);
         var user = _db.Users.FirstOrDefault(a => a.Name == credentials.username);
         if (user is null) { return Unauthorized(); }
         if (!user.CheckPassword(credentials.password)) { return Unauthorized(); }
+        _db.Users.Add(localuser);
+        try { _db.SaveChanges(); }
+        catch (DbUpdateException) { return BadRequest(); } 
 
         var role = localAdmins.Contains(currentUser.Cn)
                         ? AdUserRole.Management.ToString() : currentUser.Role.ToString();
