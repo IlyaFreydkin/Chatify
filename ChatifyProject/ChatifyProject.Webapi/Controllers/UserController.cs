@@ -20,7 +20,7 @@ using System.Security.Claims;
 public class UserController : ControllerBase
 {
     // DTO class for the JSON body of the login request
-    public record CredentialsDto(string username, string password);
+    public record CredentialsDto(string username, string password, string email);
 
     private readonly ChatifyContext _db;
     private readonly IConfiguration _config;
@@ -37,7 +37,7 @@ public class UserController : ControllerBase
     /// POST /api/user/login
     /// </summary>
     [HttpPost("login")]
-    public IActionResult Login([FromBody] CredentialsDto credentials, UserDto userdto)
+    public IActionResult Login([FromBody] CredentialsDto credentials)
     {
         var lifetime = TimeSpan.FromHours(3);
         var searchuser = _config["Searchuser"];
@@ -52,19 +52,15 @@ public class UserController : ControllerBase
         var currentUser = service.CurrentUser;
         if (currentUser is null) { return Unauthorized(); }
         //TODO: Add user to your db if not exist
-       
-        var registerUser = _db.Users.FirstOrDefault(u => u.Guid == userdto.Guid);
-        if(registerUser is null) 
-        { 
-            var localuser = new User(userdto.Name, userdto.Password, userdto.Email, userdto.Role);
-            _db.Users.Add(localuser);     
+        var user = _db.Users.FirstOrDefault(a => a.Name == credentials.username);
+        if (user is null) 
+        {
+            var localuser = new User(credentials.username, credentials.password, credentials.email, Userrole.User);
+            _db.Users.Add(localuser);
             try { _db.SaveChanges(); }
             catch (DbUpdateException) { return BadRequest(); }
         }
-
-        var user = _db.Users.FirstOrDefault(a => a.Name == credentials.username);
-        if (user is null) { return Unauthorized(); }
-        if (!user.CheckPassword(credentials.password)) { return Unauthorized(); }
+        else if (!user.CheckPassword(credentials.password)) { return Unauthorized(); }
 
         var role = localAdmins.Contains(currentUser.Cn)
                         ? AdUserRole.Management.ToString() : currentUser.Role.ToString();
