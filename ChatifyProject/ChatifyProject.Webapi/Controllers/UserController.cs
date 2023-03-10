@@ -55,8 +55,8 @@ public class UserController : ControllerBase
         var user = _db.Users.FirstOrDefault(a => a.Name == credentials.username);
         if (user is null) 
         {
-            var localuser = new User(credentials.username, credentials.password, credentials.email, Userrole.User);
-            _db.Users.Add(localuser);
+            user = new User(credentials.username, credentials.password, credentials.email, Userrole.User);
+            _db.Users.Add(user);
             try { _db.SaveChanges(); }
             catch (DbUpdateException) { return BadRequest(); }
         }
