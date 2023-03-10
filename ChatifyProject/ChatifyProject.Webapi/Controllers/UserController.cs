@@ -25,13 +25,11 @@ public class UserController : ControllerBase
     private readonly ChatifyContext _db;
     private readonly IConfiguration _config;
     private readonly bool _isDevelopment;
-    private readonly IMapper _mapper;
 
-    public UserController(IHostEnvironment _env, IConfiguration config, IMapper mapper, ChatifyContext db)
+    public UserController(IHostEnvironment _env, IConfiguration config, ChatifyContext db)
     {
         _config = config;
         _isDevelopment = _env.IsDevelopment();
-        _mapper = mapper;
         _db = db;
     }
     
@@ -54,13 +52,19 @@ public class UserController : ControllerBase
         var currentUser = service.CurrentUser;
         if (currentUser is null) { return Unauthorized(); }
         //TODO: Add user to your db if not exist
-        var localuser = new User(userdto.Name, userdto.Password, userdto.Email, userdto.Role);
+       
+        var registerUser = _db.Users.FirstOrDefault(u => u.Guid == userdto.Guid);
+        if(registerUser is null) 
+        { 
+            var localuser = new User(userdto.Name, userdto.Password, userdto.Email, userdto.Role);
+            _db.Users.Add(localuser);     
+            try { _db.SaveChanges(); }
+            catch (DbUpdateException) { return BadRequest(); }
+        }
+
         var user = _db.Users.FirstOrDefault(a => a.Name == credentials.username);
         if (user is null) { return Unauthorized(); }
         if (!user.CheckPassword(credentials.password)) { return Unauthorized(); }
-        _db.Users.Add(localuser);
-        try { _db.SaveChanges(); }
-        catch (DbUpdateException) { return BadRequest(); } 
 
         var role = localAdmins.Contains(currentUser.Cn)
                         ? AdUserRole.Management.ToString() : currentUser.Role.ToString();
