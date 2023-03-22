@@ -33,6 +33,10 @@ docker --version
 
 ## Backend einrichten
 
+###
+```
+docker run -d -p 13306:3306 --name chatify_mariadb -e MARIADB_USER=root -e MARIADB_ROOT_PASSWORD=Password mariadb:10.10.3
+```
 ### appsettings.Development.json
 
 Lege im Verzeichnis *tschess/tschess.Backend* die Datei *appsettings.Development.json* an.
@@ -46,7 +50,7 @@ Lege im Verzeichnis *tschess/tschess.Backend* die Datei *appsettings.Development
 ```javascript
 {
   "ConnectionStrings": {
-    "SqlServer": "Server=127.0.0.1,1433;Initial Catalog=ChatifyDb;User Id=sa;Password=SqlServer2019"
+    "MySql": "server=localhost;port=13306;database=Chatify;user=root;password=Password"
   },
   "Searchuser": "",
   "Searchpass": "",
@@ -87,3 +91,4 @@ startServer.cmd
 chmod a+x startServer.sh
 ./startServer.sh
 ```
+

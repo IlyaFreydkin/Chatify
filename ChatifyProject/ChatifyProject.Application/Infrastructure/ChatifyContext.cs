@@ -45,8 +45,8 @@ namespace ChatifyProject.Application.Infrastructure
                 return new User(
                     name: f.Name.LastName().ToLower(),
                     email: $"{f.Name.FirstName()}@gmail.at",
+                    password: "1111",
                     role: f.PickRandom<Userrole>())
-
                 { Guid = f.Random.Guid() };
             })
             .Generate(20)
