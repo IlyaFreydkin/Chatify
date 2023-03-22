@@ -48,7 +48,7 @@ builder.Services.AddAutoMapper(typeof(ChatifyProject.Application.Dto.MappingProf
 builder.Services.AddDbContext<ChatifyContext>(opt =>
 {
     opt.UseMySql(
-        builder.Configuration.GetConnectionString("MySql"),
+        builder.Configuration.GetConnectionString("Default"),
         new MariaDbServerVersion("10.10.3"),
         o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery));
 });

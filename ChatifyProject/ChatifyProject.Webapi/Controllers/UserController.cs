@@ -20,7 +20,7 @@ using System.Security.Claims;
 public class UserController : ControllerBase
 {
     // DTO class for the JSON body of the login request
-    public record CredentialsDto(string username, string password, string email);
+    public record CredentialsDto(string username, string password);
 
     private readonly ChatifyContext _db;
     private readonly IConfiguration _config;
@@ -55,7 +55,7 @@ public class UserController : ControllerBase
         var user = _db.Users.FirstOrDefault(a => a.Name == credentials.username);
         if (user is null) 
         {
-            user = new User(credentials.username, credentials.password, credentials.email, Userrole.User);
+            user = new User(credentials.username, credentials.password, "guest@gmail.com", Userrole.User);
             _db.Users.Add(user);
             try { _db.SaveChanges(); }
             catch (DbUpdateException) { return BadRequest(); }
