@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 var builder = WebApplication.CreateBuilder(args);
 // JWT Authentication ******************************************************************************
-byte[] secret = Convert.FromBase64String(builder.Configuration["JwtSecret"]);
+byte[] secret = Convert.FromBase64String(builder.Configuration["Secret"]);
 builder.Services
     .AddAuthentication(options => options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -73,9 +73,7 @@ if (app.Environment.IsDevelopment())
     {
         using (var db = scope.ServiceProvider.GetRequiredService<ChatifyContext>())
         {
-            db.Database.EnsureDeleted();
-            db.Database.EnsureCreated();
-            db.Seed();
+            db.CreateDatabase(isDevelopment: app.Environment.IsDevelopment());
         }
     }
     app.UseCors();

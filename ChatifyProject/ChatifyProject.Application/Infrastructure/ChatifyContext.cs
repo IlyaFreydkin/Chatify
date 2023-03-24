@@ -34,71 +34,63 @@ namespace ChatifyProject.Application.Infrastructure
             }
         }
 
-       
-            /// <summary>
-            /// Initialize the database with some values (holidays, ...).
-            /// Unlike Seed, this method is also called in production.
-            /// </summary>
-            private void Initialize()
-            {
-                new User(
-
+        /// <summary>
+        /// Initialize the database with some values (holidays, ...).
+        /// Unlike Seed, this method is also called in production.
+        /// </summary>
+        private void Initialize()
+        {
+            new User(
                     name: "Ilya",
                     password: "1111",
                     email: "fre22343@spengergasse.at",
                     role: Userrole.Admin
                     );
-
-                new User(
-
-                    name: "Ahmed",
-                    password: "1111",
-                    email: "ahm22106@spengergasse.at",
-                    role: Userrole.User
-                    );
-            }
-
-            /// <summary>
-            /// Generates random values for testing the application. This method is only called in development mode.
-            /// </summary>
-            /// 
-            private void Seed()
-            {
-                Randomizer.Seed = new Random(1619);
-                var faker = new Faker("de");
-
-                var users = new Faker<User>("de").CustomInstantiator(f =>
-                {
-                    return new User(
-                        name: f.Name.LastName().ToLower(),
-                        email: $"{f.Name.FirstName()}@gmail.at",
-                        password: "1111",
-                        role: f.PickRandom<Userrole>())
-                    { Guid = f.Random.Guid() };
-                })
-                .Generate(20)
-                .ToList();
-                Users.AddRange(users);
-                SaveChanges();
-            }
-
-
-
-            /// <summary>
-            /// Creates the database. Called once at application startup.
-            /// </summary>
-            public void CreateDatabase(bool isDevelopment)
-            {
-                if (isDevelopment) { Database.EnsureDeleted(); }
-                // EnsureCreated only creates the model if the database does not exist or it has no
-                // tables. Returns true if the schema was created.  Returns false if there are
-                // existing tables in the database. This avoids initializing multiple times.
-                if (Database.EnsureCreated()) { Initialize(); }
-                if (isDevelopment) Seed();
-            }
+            new User(
+                name: "Ahmed",
+                password: "1111",
+                email: "ahm22106@spengergasse.at",
+                role: Userrole.User
+                );
         }
 
-       
+        /// <summary>
+        /// Generates random values for testing the application. This method is only called in development mode.
+        /// </summary>
+        /// 
+        private void Seed()
+        {
+            Randomizer.Seed = new Random(1619);
+            var faker = new Faker("de");
+
+            var users = new Faker<User>("de").CustomInstantiator(f =>
+            {
+                return new User(
+                    name: f.Name.LastName().ToLower(),
+                    email: $"{f.Name.FirstName()}@gmail.at",
+                    password: "1111",
+                    role: f.PickRandom<Userrole>())
+                { Guid = f.Random.Guid() };
+            })
+            .Generate(20)
+            .ToList();
+            Users.AddRange(users);
+            SaveChanges();
+        }
+
+        /// <summary>
+        /// Creates the database. Called once at application startup.
+        /// </summary>
+        public void CreateDatabase(bool isDevelopment)
+        {
+            if (isDevelopment) { Database.EnsureDeleted(); }
+            // EnsureCreated only creates the model if the database does not exist or it has no
+            // tables. Returns true if the schema was created.  Returns false if there are
+            // existing tables in the database. This avoids initializing multiple times.
+            if (Database.EnsureCreated()) { Initialize(); }
+            if (isDevelopment) Seed();
+        }
     }
+}
 
 
