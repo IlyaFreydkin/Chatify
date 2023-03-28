@@ -1,84 +1,78 @@
-<script setup>
-import Login from '../components/Login.vue';
-</script>
 <template>
-   <nav class="navbar navbar-expand-lg navbar-light" style="background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">My Website</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto w-100 justify-content-end">
-        <li class="nav-item">
-          <router-link class="nav-link" to="/">Home</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link" to="/chatdemo">Chat Demo</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link" to="/waitingroom">Warteraum</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link" to="/rtcchat">WebRTC Chat</router-link>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-
-        
-        <Login></Login>
-   
+  <nav class="navMenu">
+    <router-link class="nav-link" to="/">
+      <span>Home</span>
+    </router-link>
+    <router-link class="nav-link" to="/blog">
+      <span>ChatDemo</span>
+    </router-link>
+    <router-link class="nav-link" to="/work">
+      <span>Warteraum</span>
+    </router-link>
+    <router-link class="nav-link" to="/about">
+      <span>WebRTC Chat</span>
+    </router-link>
+    <div class="dot"></div>
+  </nav>
 </template>
 
 <style scoped>
-.navbar {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100%;
-}
+  @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
 
-.navbar-brand {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-.nav-link {
-  color: #333;
-  font-weight: 500;
-}
+  body {
+    background: #272727;
+    font-family: "Montserrat", sans-serif;
+  }
 
-.nav-link:hover,
-.nav-link:focus {
-  color: #007bff;
-}
-
-.navbar-toggler-icon {
-  background-color: #333;
-}
-
-@media (max-width: 991.98px) {
-  .navbar-collapse {
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  .navMenu {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .nav-link {
-    font-size: 1.2rem;
-    border-bottom: 1px solid #e0e0e0;
+    color: #1e0880;
+    text-decoration: none;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 10px 20px;
+    margin: 0 10px;
+    transition: all 0.2s ease-in-out;
+    position: relative;
   }
 
-  .nav-link:last-child {
-    border-bottom: none;
+  .nav-link:hover {
+    color: #563cc7;
   }
 
-  .nav-link:hover,
-  .nav-link:focus {
-    color: #007bff;
-    background-color: transparent;
+  .nav-link:hover .dot {
+    opacity: 1;
+    transform: scale(1);
   }
-}
 
+  .dot {
+    width: 12px;
+    height: 12px;
+    background: #563cc7;
+    border-radius: 50%;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: all 0.2s ease-in-out;
+    z-index: -1;
+  }
 </style>
