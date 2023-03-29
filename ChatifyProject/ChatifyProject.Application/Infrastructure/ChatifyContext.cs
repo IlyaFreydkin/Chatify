@@ -41,17 +41,17 @@ namespace ChatifyProject.Application.Infrastructure
         private void Initialize()
         {
             new User(
-                    name: "Ilya",
-                    password: "1111",
-                    email: "fre22343@spengergasse.at",
-                    role: Userrole.Admin
-                    );
+                name: "Ilya",
+                password: "1111",
+                email: "fre22343@spengergasse.at",
+                role: Userrole.Admin
+            );
             new User(
                 name: "Ahmed",
                 password: "1111",
                 email: "ahm22106@spengergasse.at",
                 role: Userrole.User
-                );
+           );
         }
 
         /// <summary>
