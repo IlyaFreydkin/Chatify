@@ -28,3 +28,4 @@ coverage
 *.sw?
 
 appsettings.Development.json
+azure_secrets.txt
