@@ -56,6 +56,7 @@
     transition: all 0.2s ease-in-out;
     position: relative;
   }
+  
 
   .nav-link:hover {
     color: #150369;
@@ -108,5 +109,18 @@ button:active {
   transform: scale(0.9);
 }
 
+@media (max-width: 768px) {
+  .navMenu {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+  }
+  
+  .nav-link {
+    display: block;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+}
   
 </style>

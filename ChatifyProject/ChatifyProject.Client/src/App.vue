@@ -1,18 +1,23 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
 import Navbar from './components/NavBar.vue';
+import Footer from './components/Footer.vue';
+import WaitingRoomViewVue from './views/WaitingRoomView.vue';
 </script>
 
 <template>
-<nav>
+  	<nav>
             <Navbar></Navbar>
         </nav>
     <div class="appContainer">
         
         <main>
-            <router-view></router-view>
+            <router-view><WaitingRoomView></WaitingRoomView></router-view>
         </main>
     </div>
+
+    <footer> <Footer></Footer> </footer>
+
 </template>
 
 <style scoped>
