@@ -72,6 +72,11 @@ public class UserController : ControllerBase
             (AdUserRole.Management, _) => AdUserRole.Teacher.ToString(),
             (_, _) => AdUserRole.Administration.ToString()
         };
+        if (currentUser.Classes.Length > 0)
+        {
+            user.Group = currentUser.Classes[0];
+        }
+
         var tokenHandler = new JwtSecurityTokenHandler();
         var tokenDescriptor = new SecurityTokenDescriptor
         {
@@ -112,5 +117,20 @@ public class UserController : ControllerBase
             Username = HttpContext.User.Identity?.Name,
             Group = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Group")?.Value
         });
+    }
+
+    /// <summary>
+    /// POST /api/user/register
+    /// </summary>
+    [HttpPost("register")]
+    public IActionResult Register([FromBody] CredentialsDto credentials)
+    {
+        var user = _db.Users.FirstOrDefault(a => a.Name == credentials.username);
+        if (user != null) { return BadRequest("User already exists"); }
+        user = new User(credentials.username, credentials.password, "guest@gmail.com", Userrole.User);
+        _db.Users.Add(user);
+        try { _db.SaveChanges(); }
+        catch (DbUpdateException) { return BadRequest("Could not register user"); }
+        return Ok();
     }
 }

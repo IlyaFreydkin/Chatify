@@ -31,6 +31,7 @@ namespace ChatifyProject.Application.Model
         public Userprofile? Profile {get; set; }
         public string Salt { get; set; }
         public string PasswordHash { get; set; }
+        public string? Group { get; set; }
 
         [MemberNotNull(nameof(Salt), nameof(PasswordHash))]
         public void SetPassword(string password)
