@@ -42,6 +42,7 @@ export default {
         try {
             signalRService.configureConnection(this.$store.state.userdata.token);
             signalRService.subscribeEvent('ReceiveMessage', this.onMessageReceive);
+            signalRService.subscribeEvent('ReceiveConnectedUsers', this.onMessageReceive);
             await signalRService.connect();
         } catch (e) {
             alert(JSON.stringify(e));
@@ -53,6 +54,9 @@ export default {
         },
         sendMessage() {
             signalRService.sendMessage(this.newMessage);
+        },
+        getConnectedUsers() {
+            signalRService.sendConnectedUsers();
         }
     }
 };

@@ -36,7 +36,11 @@ class SignalRService {
         // SendMessage is corresponding to the C# Method in ChessHub.
         await this.connection.invoke("SendMessage", message);
     }
-
+    async sendConnectedUsers() {
+        if (!this.connected) { throw new Error("Invalid state. Not connected."); }
+        const users = await this.connection.invoke("SendConnectedUsers");
+        return users;
+    }
 }
 
 // Export a singleton (only 1 instance in the spa to make state management easier)
