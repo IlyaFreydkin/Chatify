@@ -1,8 +1,10 @@
+using AutoMapper;
 using Bogus;
 using ChatifyProject.Application.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ChatifyProject.Application.Infrastructure
 {
@@ -40,17 +42,29 @@ namespace ChatifyProject.Application.Infrastructure
         /// </summary>
         private void Initialize()
         {
-            new User(
+            var ilya = new User(
                 name: "Ilya",
                 password: "1111",
                 email: "fre22343@spengergasse.at",
                 role: Userrole.Admin
             );
-            new User(
+            new Userprofile(
+                firstname: "Ilya", 
+                lastname: "Freydkin", 
+                user: ilya, 
+                description: "Ich mag Pizza"
+            );
+            var ahmed = new User(
                 name: "Ahmed",
                 password: "1111",
                 email: "ahm22106@spengergasse.at",
                 role: Userrole.User
+           );
+           new Userprofile(
+                firstname: "Ahmed",
+                lastname: "Khalid",
+                user: ahmed,
+                description: "Ich mag Dönner"
            );
         }
 
@@ -65,12 +79,23 @@ namespace ChatifyProject.Application.Infrastructure
 
             var users = new Faker<User>("de").CustomInstantiator(f =>
             {
-                return new User(
+                var user = new User(
                     name: f.Name.LastName().ToLower(),
                     email: $"{f.Name.FirstName()}@gmail.at",
                     password: "1111",
                     role: f.PickRandom<Userrole>())
                 { Guid = f.Random.Guid() };
+
+                var profile = new Userprofile(
+                    firstname: f.Name.FirstName().ToLower(),
+                    lastname: f.Name.LastName().ToLower(),
+                    user: user,
+                    description: "Das ist ein Beschreibung!")
+                { Guid = f.Random.Guid() };
+
+                user.Profile = profile;
+
+                return user;
             })
             .Generate(20)
             .ToList();
