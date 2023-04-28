@@ -245,7 +245,7 @@ p{
     transition: all 300ms linear;
     transition-delay: 1700ms;
 }
-body.hero-anime p{
+body.nav-a p{
 	opacity: 0;
 	transform: translateY(40px);
     transition-delay: 1700ms;
@@ -256,43 +256,43 @@ h1 span{
 	opacity: 1;
 	transform: translate(0);
 }
-body.hero-anime h1 span:nth-child(1){
+body.nav-a h1 span:nth-child(1){
 	opacity: 0;
 	transform: translateY(-20px);
 }
-body.hero-anime h1 span:nth-child(2){
+body.nav-a h1 span:nth-child(2){
 	opacity: 0;
 	transform: translateY(-30px);
 }
-body.hero-anime h1 span:nth-child(3){
+body.nav-a h1 span:nth-child(3){
 	opacity: 0;
 	transform: translateY(-50px);
 }
-body.hero-anime h1 span:nth-child(4){
+body.nav-a h1 span:nth-child(4){
 	opacity: 0;
 	transform: translateY(-10px);
 }
-body.hero-anime h1 span:nth-child(5){
+body.nav-a h1 span:nth-child(5){
 	opacity: 0;
 	transform: translateY(-50px);
 }
-body.hero-anime h1 span:nth-child(6){
+body.nav-a h1 span:nth-child(6){
 	opacity: 0;
 	transform: translateY(-20px);
 }
-body.hero-anime h1 span:nth-child(7){
+body.nav-a h1 span:nth-child(7){
 	opacity: 0;
 	transform: translateY(-40px);
 }
-body.hero-anime h1 span:nth-child(8){
+body.nav-a h1 span:nth-child(8){
 	opacity: 0;
 	transform: translateY(-10px);
 }
-body.hero-anime h1 span:nth-child(9){
+body.nav-a h1 span:nth-child(9){
 	opacity: 0;
 	transform: translateY(-30px);
 }
-body.hero-anime h1 span:nth-child(10){
+body.nav-a h1 span:nth-child(10){
 	opacity: 0;
 	transform: translateY(-20px);
 }
@@ -326,23 +326,23 @@ h1 span:nth-child(9){
 h1 span:nth-child(10){
     transition-delay: 700ms;
 }
-body.hero-anime h1 span:nth-child(11){
+body.nav-a h1 span:nth-child(11){
 	opacity: 0;
 	transform: translateY(30px);
 }
-body.hero-anime h1 span:nth-child(12){
+body.nav-a h1 span:nth-child(12){
 	opacity: 0;
 	transform: translateY(50px);
 }
-body.hero-anime h1 span:nth-child(13){
+body.nav-a h1 span:nth-child(13){
 	opacity: 0;
 	transform: translateY(20px);
 }
-body.hero-anime h1 span:nth-child(14){
+body.nav-a h1 span:nth-child(14){
 	opacity: 0;
 	transform: translateY(30px);
 }
-body.hero-anime h1 span:nth-child(15){
+body.nav-a h1 span:nth-child(15){
 	opacity: 0;
 	transform: translateY(50px);
 }
@@ -382,7 +382,7 @@ h1 span:nth-child(15){
     transition: all 300ms linear;
     transition-delay: 1900ms;
 }
-body.hero-anime #switch{
+body.nav-a #switch{
 	opacity: 0;
 	transform: translateY(40px);
     transition-delay: 1900ms;
@@ -525,7 +525,7 @@ body.dark .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 		content: "";
 		border: none;
 		background-color: #000;
-		vertical-align: 0;
+	
 	}
 	.dropdown-toggle::after {
 		position: absolute;
@@ -537,7 +537,7 @@ body.dark .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 		content: "";
 		border: none;
 		background-color: #000;
-		vertical-align: 0;
+		
 		transition: all 200ms linear;
 	}
 	.dropdown-toggle[aria-expanded="true"]::after{
@@ -621,13 +621,8 @@ export default {
 };
 
 
-var hamburger = document.querySelector(".hamburger");
-var menu = document.querySelector(".menu");
 
-function toggleMenu() {
-  menu.classList.toggle("show");
-}
 
-hamburger.addEventListener("click", toggleMenu);
+
 
 </script>
