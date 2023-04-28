@@ -44,7 +44,7 @@ public class UserController : ControllerBase
         var lifetime = TimeSpan.FromHours(3);
         var searchuser = _config["Searchuser"];
         var searchpass = _config["Searchpass"];
-        var secret = Convert.FromBase64String(_config["JwtSecret"]);
+        var secret = Convert.FromBase64String(_config["Secret"]);
         var localAdmins = _config["LocalAdmins"].Split(",");
 
         using var service = _isDevelopment && !string.IsNullOrEmpty(searchuser)
