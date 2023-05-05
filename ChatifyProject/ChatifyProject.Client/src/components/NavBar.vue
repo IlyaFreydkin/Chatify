@@ -15,6 +15,7 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ml-auto py-4 py-md-0">
+				
                 <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">
                   <router-link to="/" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     Home
@@ -49,7 +50,7 @@
                   <router-link to="/contact" class="nav-link">
                     Contact
                   </router-link>
-                </li>
+                </li> 
               </ul>
             </div>  	
     		<router-link to="/register" style="text-decoration: none;">
@@ -142,7 +143,6 @@ body{
 	transition : all 0.3s ease-out;
 }
 .navigation-wrap{
-	position: fixed;
 	width: 100%;
 	top: 0;
 	left: 0;
@@ -151,7 +151,8 @@ body{
 	transition : all 0.3s ease-out;
 }
 .navbar{
-	padding: 0;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 .navbar-brand img{
 	height: 28px;
@@ -640,7 +641,9 @@ button::before {
   border-radius: 50%;
 }
 button:hover {
+  background-color: #8167a9;
   color: white;
+  cursor: pointer;
 }
 button:before {
   top: 100%;
