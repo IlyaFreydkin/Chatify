@@ -3,25 +3,15 @@ import { RouterLink, RouterView } from 'vue-router';
 import NavBar from './components/NavBar.vue';
 import Footer from './components/Footer.vue';
 import WaitingRoomViewVue from './views/WaitingRoomView.vue';
-
-
+import Service from './views/ServiceView.vue'
+import Journal from './views/JournalView.vue'
+import Contact from './views/ContactView.vue'
 </script>
 
 <template>
-  	<nav>
-
-         <NavBar></NavBar>
-        </nav>
-    <div class="appContainer">
-        
-        <main>
-          
-            
-        </main>
-    </div>
-
+  	<nav> <NavBar></NavBar> </nav>
+    <div class="appContainer"> <main></main> </div>
     <footer> <Footer></Footer> </footer>
-
 </template>
 
 <style scoped>

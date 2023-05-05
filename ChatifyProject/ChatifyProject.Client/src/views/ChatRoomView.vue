@@ -1,10 +1,14 @@
 <script setup>
+import NavBar from '../components/NavBar.vue';
+import Footer from '../components/Footer.vue';
+import WaitingRoomViewVue from '../views/WaitingRoomView.vue';
 import signalRService from '../services/SignalRService.js';
 </script>
 
 <template>
-    <div class="chatDemoView">
-        <h5>Demo für einen Textchat mit SignalR</h5>
+    <nav> <NavBar></NavBar> </nav>
+    <div class="chatRoomView">
+        <h5>Chat Room</h5>
         <p>Mache einen 2. Tab auf und melde dich unter einem anderen User an. Wenn du in der
             Datei appsettings.Development.json der API deinen User als Suchuser hinterlegt hast,
             kannst du jedes Passwort verwenden.</p>
@@ -16,6 +20,7 @@ import signalRService from '../services/SignalRService.js';
             {{ m }}
         </div>
     </div>
+    <footer> <Footer></Footer> </footer>
 </template>
 
 <style scoped>
