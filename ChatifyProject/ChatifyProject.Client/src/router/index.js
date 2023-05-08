@@ -21,7 +21,7 @@ const router = createRouter({
     {
       path: '/chatroom',
       name: 'chatroom',
-      meta: { authorize: true },
+      meta: { authorize: false },
       component: ChatRoomView
     },
     {
