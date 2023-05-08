@@ -6,7 +6,7 @@
           <nav class="navbar navbar-expand-md navbar-light">
 
             <router-link to="/" class="navbar-brand">
-              <img src="@/assets/logo-black.png" alt="Logo">
+              <img src="@/assets/logo-black2.png" alt="Logo">
             </router-link>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -155,10 +155,9 @@ body{
   margin: 0 auto;
 }
 .navbar-brand img{
-	height: 28px;
+	height: 50px;
 	width: auto;
 	display: block;
-  filter: brightness(10%);
 	-webkit-transition : all 0.3s ease-out;
 	transition : all 0.3s ease-out;
 }
