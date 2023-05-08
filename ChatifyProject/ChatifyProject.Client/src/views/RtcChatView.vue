@@ -1,5 +1,16 @@
+<script setup>
+import NavBar from '../components/NavBar.vue';
+import Footer from '../components/Footer.vue';
+import Banner from '../components/Banner.vue';
+</script>
+
 <template>
-    <div class="rtcChatView">
-        <h5>WebRTC Chat</h5>
+<div id="page">
+        <NavBar></NavBar>
+        <div class="webrtc">
+            WebRTC
+        </div>  
     </div>
+        <Footer></Footer>
+    
 </template>
