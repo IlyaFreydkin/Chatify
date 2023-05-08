@@ -51,5 +51,10 @@ namespace ChatifyProject.Webapi.Hubs
             }
             return Task.CompletedTask;
         }
+        public async Task SendConnectedUsers()
+        {
+            var users = _users.ToList();
+            await Clients.Caller.SendAsync("ReceiveConnectedUsers", users);
+        }
     }
 }
