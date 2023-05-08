@@ -17,6 +17,7 @@
     "@microsoft/signalr": "^7.0.2",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
+    "jquery": "^3.6.4",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
     "vuex": "^4.1.0"

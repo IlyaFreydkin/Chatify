@@ -1,20 +1,33 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
-import Navbar from './components/NavBar.vue';
+import NavBar from './components/NavBar.vue';
+import Footer from './components/Footer.vue';
+import WaitingRoomViewVue from './views/WaitingRoomView.vue';
+
+
 </script>
 
 <template>
-    <div class="appContainer">
-        <nav>
-            <Navbar></Navbar>
+  	<nav>
+
+         <NavBar></NavBar>
         </nav>
+    <div class="appContainer">
+        
         <main>
-            <router-view></router-view>
+          
+            
         </main>
     </div>
+
+    <footer> <Footer></Footer> </footer>
+
 </template>
 
 <style scoped>
+html, body {
+  background-color: #2be5bd;
+}
 .appContainer {
   display: flex;
   flex-direction: column;
