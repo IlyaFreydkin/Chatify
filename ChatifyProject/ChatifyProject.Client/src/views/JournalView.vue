@@ -7,8 +7,8 @@ import Banner from '../components/Banner.vue';
 <template>
 <div id="page">
         <NavBar></NavBar>
-        <div class="webrtc">
-            WebRTC
+        <div class="journal">
+            Journal
         </div>  
     </div>
         <Footer></Footer>

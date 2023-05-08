@@ -1,46 +1,40 @@
 <script setup>
 import NavBar from '../components/NavBar.vue';
 import Footer from '../components/Footer.vue';
-import Banner from '../components/Banner.vue';
 </script>
 
-<template>  
-    <div id="page">
-        <NavBar></NavBar>
-        <div class="container">
-            <h1>Welcome to our Video Chatting Platform!</h1>
-            <p>Join our community and start chatting with people from around the world.</p>
-            <router-link to="/webrtc">
-				<button> Start Video Chatting </button>
-			</router-link>
-        </div>  
+<template>
+  <div id="page">
+    <NavBar></NavBar>
+    <div class="container">
+      <h1>Our Services</h1>
+      <p>We offer a variety of video chatting services to suit your needs.</p>
+      <ul>
+        <li>Service</li>
+        <li>Service</li>
+        <li>Service</li>
+        <li>Service</li>
+      </ul>
+      <p>Sign up now to start using our platform!</p>
+      <router-link to="/signup">
+        <button>Sign Up</button>
+      </router-link>
     </div>
-        <Footer></Footer>
+    <Footer></Footer>
+  </div>
 </template>
 
-<script>
-export default {
-  methods: {
-    
-  }
-}
-</script>
-
 <style scoped>
-#page {
-    text-align: center;
-}
 .container {
-    margin-top: 70px;
-    margin-bottom: 70px;
-    
+  margin-top: 70px;
+  margin-bottom: 70px;
 }
 button {
   --color: #8167a9;
   font-family: inherit;
   display: inline-block;
-  width: 10em; 
-  height: 2.6em; 
+  width: 10em;
+  height: 2.6em;
   overflow: hidden;
   margin: 20px;
   font-size: 17px;
@@ -75,5 +69,8 @@ button:hover::before {
   top: -30px;
   left: -30px;
 }
+ul {
+    list-style-type: decimal; 
+    padding-left: 50px; 
+}
 </style>
-
