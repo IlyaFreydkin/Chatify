@@ -7,9 +7,7 @@ import signalRService from '../services/SignalRService.js';
 
 <template>
   <div class="chat-room-view">
-    <nav>
-      <NavBar />
-    </nav>
+    <NavBar></NavBar>
     <main>
       <section class="chat-room">
         <h2 class="chat-room-title">Allgemein</h2>
@@ -35,9 +33,7 @@ import signalRService from '../services/SignalRService.js';
         </div>
       </section>
     </main>
-    <footer>
-      <Footer />
-    </footer>
+    <Footer></Footer>
   </div>
 </template>
 

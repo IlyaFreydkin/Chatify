@@ -1,5 +1,7 @@
 <script setup>
 import axios from 'axios';
+import NavBar from '../components/NavBar.vue';
+import Footer from '../components/Footer.vue';
 </script>
 
 <template>
@@ -16,6 +18,7 @@ import axios from 'axios';
         </template>
     </div>
 </template>
+
 <style scoped>
 .loginForm {
     display: flex;
@@ -60,7 +63,7 @@ export default {
     },
     computed: {
         authenticated() {
-            return this.$store.state.user.isLoggedIn;
+            return this.$store.state.userdata.isLoggedIn;
         },
         username() {
             return this.$store.state.user.name;

@@ -10,6 +10,7 @@ import axios from 'axios';
             <label>Password:</label>
             <input type="password" v-model="loginModel.password" />
             <button class="btn btn-primary btn-sm" v-on:click="login()">Login</button>
+            <small>Hint: Use admin, password 1111 or user, password 1111)</small>
         </template>
         <template v-else> User {{ username }} logged in. <span class="logoutLink" v-on:click="logout()">Logout</span> </template>
     </div>
@@ -34,7 +35,10 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            loginModel: {},
+            loginModel: {
+                username: '',
+                password: '',
+            },
         };
     },
     methods: {

@@ -3,7 +3,11 @@ import { createStore } from 'vuex'
 export default createStore({
     state() {
         return {
-            userdata: {}
+            userdata: {
+                username: "",
+                guid: "",
+                isLoggedIn: false
+            }
         }
     },
     mutations: {

@@ -1,3 +1,7 @@
+<script setup>
+import Login from '../components/Login.vue';
+</script>
+
 <template>
   <div class="navigation-wrap bg-light start-header start-style">
     <div class="container">
@@ -52,13 +56,16 @@
                   </router-link>
                 </li> 
               </ul>
-            </div>  	
-    		<router-link to="/register" style="text-decoration: none;">
+            </div>  
+			<div class="navrow">
+				<Login></Login>		
+			</div>	
+    		<!-- <router-link to="/register" style="text-decoration: none;">
 				<button> Register </button>
 			</router-link>		
     		<router-link to="/login" style="text-decoration: none;">
 				<button> Login </button>
-			</router-link>	
+			</router-link>	 -->
           </nav>
         </div>
       </div>
