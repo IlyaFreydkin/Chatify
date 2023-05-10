@@ -1,57 +1,102 @@
-
-
-
 <template>
-<div class="navigation-wrap bg-light start-header start-style">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<nav class="navbar navbar-expand-md navbar-light">
-					
-						<a class="navbar-brand" href="https://front.codes/" target="_blank"><img src="logo-black.png" alt=""></a>	
-						
-						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-							<span class="navbar-toggler-icon"></span>
-						</button>
-						
-						<div class="collapse navbar-collapse" id="navbarSupportedContent">
-							<ul class="navbar-nav ml-auto py-4 py-md-0">
-								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">
-									<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Home</a>
-						
-								</li>
-								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link" href="#">Chat Demo</a>
-								</li>
-								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link" href="#">Warteraum</a>
-								</li>
-								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Services</a>
-									
-								</li>
-								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link" href="#">Journal</a>
-								</li>
-								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link" href="#">Contact</a>
-								</li>
-							</ul>
-						</div>
-						
-					</nav>		
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="navigation-wrap bg-light start-header start-style">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="navbar navbar-expand-md navbar-light">
 
-	
-  
+            <router-link to="/" class="navbar-brand">
+              <img src="@/assets/logo-black2.png" alt="Logo">
+            </router-link>
 
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
 
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ml-auto py-4 py-md-0">
+				
+                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">
+                  <router-link to="/" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    Home
+                  </router-link>
+                </li>
+                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                  <router-link to="/chatroom" class="nav-link">
+                    Chat Room
+                  </router-link>
+                </li>
+                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                  <router-link to="/waitingroom" class="nav-link">
+                    Waitingroom
+                  </router-link>
+                </li>
+                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                  <router-link to="/webrtc" class="nav-link">
+                    WebRTC
+                  </router-link>
+                </li>
+                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                  <router-link to="/service" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    Service
+                  </router-link>
+                </li>
+                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                  <router-link to="/journal" class="nav-link">
+                    Journal
+                  </router-link>
+                </li>
+                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                  <router-link to="/contact" class="nav-link">
+                    Contact
+                  </router-link>
+                </li> 
+              </ul>
+            </div>  	
+    		<router-link to="/register" style="text-decoration: none;">
+				<button> Register </button>
+			</router-link>		
+    		<router-link to="/login" style="text-decoration: none;">
+				<button> Login </button>
+			</router-link>	
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
+<script>
+import { RouterLink } from 'vue-router'
+import $ from 'jquery';
 
+export default {
+	mounted() {
+    // Code hier einfügen
+    var header = $(".start-style");
+    $(window).scroll(function() {
+      var scroll = $(window).scrollTop();
+      if (scroll >= 10) {
+        header.removeClass('start-style').addClass("scroll-on");
+      } else {
+        header.removeClass("scroll-on").addClass('start-style');
+      }
+    });
+    $('body').on('mouseenter mouseleave','.nav-item',function(e){
+      if ($(window).width() > 750) {
+        var _d=$(e.target).closest('.nav-item');
+        _d.addClass('show');
+        setTimeout(function(){
+          _d[_d.is(':hover')?'addClass':'removeClass']('show');
+        },1);
+      }
+    });
+  },
+  components: {
+    RouterLink
+  }
+}
+</script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&subset=devanagari,latin-ext');
@@ -78,9 +123,6 @@ body{
 	color: #fff;
 	background-color: #8167a9;
 }
-
-
-
 .start-header {
 	opacity: 1;
 	transform: translateY(0);
@@ -101,7 +143,6 @@ body{
 	transition : all 0.3s ease-out;
 }
 .navigation-wrap{
-	position: fixed;
 	width: 100%;
 	top: 0;
 	left: 0;
@@ -110,13 +151,13 @@ body{
 	transition : all 0.3s ease-out;
 }
 .navbar{
-	padding: 0;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 .navbar-brand img{
-	height: 28px;
+	height: 50px;
 	width: auto;
 	display: block;
-  filter: brightness(10%);
 	-webkit-transition : all 0.3s ease-out;
 	transition : all 0.3s ease-out;
 }
@@ -167,12 +208,11 @@ body{
     transition: all 200ms linear;
 	padding: 10px 20px;
 	margin: auto;
+	font-size: 16px;
 }
 .nav-item:hover .nav-link{
 	color: #8167a9 !important;
 }
-
-
 .nav-item.active .nav-link{
 	color: #777 !important;
 }
@@ -203,8 +243,6 @@ body{
 	position: relative;
     transition: all 200ms linear;
 }
-
-
 .bg-light {
 	background-color: #fff !important;
     transition: all 200ms linear;
@@ -408,7 +446,6 @@ body.nav-a #switch{
 .dropdown-menu.show {
   display: block;
 }
-
 .nav-item .dropdown-menu {
     transform: translate3d(0, 10px, 0);
     visibility: hidden;
@@ -452,7 +489,6 @@ body.nav-a #switch{
 	color: #fff;
 	background-color: rgba(129,103,169,.6);
 }
-
 body.dark{
 	color: #fff;
 	background-color: #1f2029;
@@ -503,11 +539,6 @@ body.dark .navbar-light .navbar-toggler-icon:before{
 body.dark .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 	border-color: transparent;
 }
-
-
-
-
-
 @media (max-width: 767px) { 
 	h1{
 		font-size: 38px;
@@ -525,7 +556,6 @@ body.dark .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 		content: "";
 		border: none;
 		background-color: #000;
-	
 	}
 	.dropdown-toggle::after {
 		position: absolute;
@@ -536,8 +566,7 @@ body.dark .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 		height: 11px;
 		content: "";
 		border: none;
-		background-color: #000;
-		
+		background-color: #000;		
 		transition: all 200ms linear;
 	}
 	.dropdown-toggle[aria-expanded="true"]::after{
@@ -565,9 +594,6 @@ body.dark .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 		box-shadow: none;
 	}
 }
-
-
-
 .logo {
 	position: absolute;
 	bottom: 30px;
@@ -575,7 +601,6 @@ body.dark .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 	display: block;
 	z-index: 100;
 	transition: all 250ms linear;
-	
 }
 .logo img {
 	height: 26px;
@@ -587,42 +612,45 @@ body.dark .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 body.dark .logo img {
   filter: brightness(100%);
 }
-
-
+/* button login */
+button {
+  --color: #8167a9;
+  font-family: inherit;
+  display: inline-block;
+  width: 7em; 
+  height: 2.6em; 
+  overflow: hidden;
+  margin: 20px;
+  font-size: 17px;
+  z-index: 1;
+  color: var(--color);
+  border: 2px solid var(--color);
+  border-radius: 6px;
+  position: relative;
+  font-size: 16px;
+  background: white;
+}
+button::before {
+  position: absolute;
+  content: "";
+  background: var(--color);
+  width: 150px;
+  height: 200px;
+  z-index: -1;
+  border-radius: 50%;
+}
+button:hover {
+  background-color: #8167a9;
+  color: white;
+  cursor: pointer;
+}
+button:before {
+  top: 100%;
+  left: 100%;
+  transition: .3s all;
+}
+button:hover::before {
+  top: -30px;
+  left: -30px;
+}
 </style>
-
-
-
-<script>
-import $ from 'jquery';
-
-export default {
-  mounted() {
-    // Code hier einfügen
-    var header = $(".start-style");
-    $(window).scroll(function() {
-      var scroll = $(window).scrollTop();
-      if (scroll >= 10) {
-        header.removeClass('start-style').addClass("scroll-on");
-      } else {
-        header.removeClass("scroll-on").addClass('start-style');
-      }
-    });
-    $('body').on('mouseenter mouseleave','.nav-item',function(e){
-      if ($(window).width() > 750) {
-        var _d=$(e.target).closest('.nav-item');
-        _d.addClass('show');
-        setTimeout(function(){
-          _d[_d.is(':hover')?'addClass':'removeClass']('show');
-        },1);
-      }
-    });
-  }
-};
-
-
-
-
-
-
-</script>

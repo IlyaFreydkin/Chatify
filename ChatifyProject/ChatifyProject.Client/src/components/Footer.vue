@@ -69,19 +69,18 @@ body{
 ul{
 	list-style: none;
 }
-.footer{
-	background-color: #725AC1;
-    padding: 50px 0;
-    position: fixed;
-  left: 0;
-  right: 0;
+.footer {
+  background-color: #725AC1;
+  padding: 20px 0;
+  height: auto;
+  position: relative;
   bottom: 0;
   width: 100%;
-  
   color: #fff;
-  
-
+  left: 0;
+  right: 0;
 }
+
 .footer-col{
    width: 25%;
    padding: 0 15px;
