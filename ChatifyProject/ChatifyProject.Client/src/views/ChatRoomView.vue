@@ -47,6 +47,7 @@ import signalRService from '../services/SignalRService.js';
   display: flex;
   flex-direction: column;
   height: 100vh;
+   margin-bottom: 170px
 }
 
 nav {
@@ -124,6 +125,10 @@ nav {
   color: #fff;
   font-size: 1rem;
   padding: 0.75rem;
+}
+
+footer {
+  margin-top: auto;
 }
 
 .new-message {
