@@ -20,7 +20,7 @@ import WaitingRoomViewVue from './views/WaitingRoomView.vue';
         </main>
     </div>
 
-    <footer> <Footer></Footer> </footer>
+    <footer> <Footer></Footer> </footer> 
 
 </template>
 
