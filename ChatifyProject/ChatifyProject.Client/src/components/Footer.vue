@@ -1,5 +1,4 @@
 <template>
-    
    <footer class="footer">
   	 <div class="container">
   	 	<div class="row">
@@ -14,11 +13,9 @@
   	 		</div>
   	 		<div class="footer-col">
   	 			<h4>Informationen</h4>
-  	 			<ul>
-  	 				
+  	 			<ul>	
   	 				<li><a href="#">Lerne kennen</a></li>
-  	 				<li><a href="#">Jetzt sofort</a></li>
-  	 				
+  	 				<li><a href="#">Jetzt sofort</a></li>		
   	 			</ul>
   	 		</div>
             <div class="footer-col">
@@ -30,8 +27,6 @@
   	 				
   	 			</ul>
   	 		</div>
-            
-  	 		
   	 		<div class="footer-col">
   	 			<h4>Folg uns</h4>
   	 			<div class="social-links">
@@ -72,15 +67,12 @@ ul{
 .footer{
 	background-color: #725AC1;
     padding: 50px 0;
-    position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  
-  color: #fff;
-  
-
+    position: relative;
+  	left: 0;
+  	right: 0;
+  	bottom: 0;
+  	width: 100%;
+  	color: #fff;
 }
 .footer-col{
    width: 25%;
@@ -137,7 +129,6 @@ ul{
 	color: #725AC1;
 	background-color: #ffffff;
 }
-
 /*responsive*/
 @media(max-width: 767px){
   .footer-col{
@@ -150,5 +141,4 @@ ul{
     width: 100%;
 }
 }
-
 </style>
