@@ -141,6 +141,7 @@ export default {
   },
   async mounted() {
     try {
+      this.interval = setInterval(() => this.updateTimeStamps(), 10000);
       signalRService.configureConnection(this.$store.state.userdata.token);
       signalRService.subscribeEvent("ReceiveMessage", this.onMessageReceive);
       signalRService.subscribeEvent("GetUser", this.onGetUser);
@@ -151,7 +152,10 @@ export default {
   },
   methods: {
     onMessageReceive(message) {
-      this.messages.push(message);
+      this.messages.push({
+        text: message,
+        timestamp: new Date().toLocaleTimeString(),
+      });
     },
     onGetUser(username) {
       this.username = username;
@@ -160,6 +164,15 @@ export default {
       signalRService.sendMessage(`${this.newMessage}`);
       this.newMessage = ""; // reset the input field
     },
+    updateTimeStamps() {
+      this.messages = this.messages.map((message) => ({
+        ...message,
+        timestamp: new Date().toLocaleTimeString(),
+      }));
+    },
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
   },
 };
 </script>
