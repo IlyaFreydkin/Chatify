@@ -18,7 +18,7 @@ import signalRService from '../services/SignalRService.js';
             </div>
             <div class="chat-message-content">
               <div class="chat-message-header">
-                <span class="chat-message-author">{{ username }}</span>
+                <span class="chat-message-author">{{ this.username }}</span>
               </div>
               <div class="chat-message-text">
                 {{ message }}
