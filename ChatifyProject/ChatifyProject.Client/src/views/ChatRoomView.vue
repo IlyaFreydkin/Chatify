@@ -30,8 +30,9 @@ import signalRService from '../services/SignalRService.js';
           </div>
         </div>
         <div class="new-message">
-          <textarea v-model="newMessage" placeholder="Nachricht eingeben"></textarea>
-          <button class="btn btn-primary" @click="sendMessage">Senden</button>
+         
+<input type="text" name="text" class="input" placeholder="Schreib eine Nachricht">
+          <button class="button" id="button" @click="sendMessage">Senden</button>
         </div>
       </section>
     </main>
@@ -50,20 +51,37 @@ import signalRService from '../services/SignalRService.js';
    margin-bottom: 170px
 }
 
+
 nav {
   margin-bottom: 0.5rem;
 }
 
 .chat-room {
-  background-color: #36393f;
+  background-color: rgb(114,90,193);
   border-radius: 0.25rem;
-  box-shadow: 0 1px 0 rgba(4, 4, 5, 0.2);
+  box-shadow: 0 1px 0 rgba(110, 98, 42, 0.2);
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   margin: 0.5rem;
   overflow-y: scroll;
+  
 }
+.input {
+ color: #8707ff;
+ border: 2px solid #8707ff;
+ border-radius: 10px;
+ padding: 30px 25px;
+ 
+ background: transparent;
+ width: 450px;
+ 
+}
+
+.input:active {
+ box-shadow: 2px 2px 15px #8707ff inset;
+}
+
 
 .chat-room-title {
   color: #fff;
@@ -83,7 +101,38 @@ nav {
   display: flex;
   margin-bottom: 1rem;
 }
+button {
+  position: relative;
+  display: inline-block;
+  margin: 15px;
+  padding: 15px 30px;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  color: #725AC1;
+  background: transparent;
+  cursor: pointer;
+  transition: ease-out 0.5s;
+  border: 2px solid #725AC1;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 0 #725AC1;
 
+}
+
+button:hover {
+  color: white;
+  box-shadow: inset 0 -100px 0 0 #725AC1;
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+button:active {
+  transform: translateY(5px);
+  box-shadow: 0px 0px 0px 0px #a29bfe;
+}
 .avatar {
   height: 36px;
   margin-right: 0.5rem;
@@ -132,11 +181,13 @@ footer {
 }
 
 .new-message {
-  background-color: #2f3136;
+  background-color: #ffffff;
   border-radius: 0.25rem;
   box-shadow: 0 1px 0 rgba(4, 4, 5, 0.2);
   display: flex;
-  margin: 0
+  margin: 100px 1rem 1rem 1rem;
+  padding: 1rem;
+
 }
 </style>
 
