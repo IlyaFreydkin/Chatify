@@ -152,7 +152,7 @@ export default {
   },
   methods: {
     onMessageReceive(message) {
-      message.timestamp = new Date().toLocaleString();
+      this.message.timestamp = new Date().toLocaleString();
       this.messages.push(message);
     },
     onGetUser(username) {
