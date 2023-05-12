@@ -132,13 +132,6 @@ nav {
 
 <script>
 export default {
-  data() {
-    return {
-      messages: [],
-      newMessage: "",
-      username: "",
-    };
-  },
   async mounted() {
     try {
       signalRService.configureConnection(this.$store.state.userdata.token);
@@ -148,13 +141,20 @@ export default {
       alert(JSON.stringify(e));
     }
   },
+  data() {
+    return {
+      messages: [],
+      newMessage: "",
+      username: "",
+    };
+  },
   methods: {
     onMessageReceive(message) {
       this.messages.push(message);
       this.username = username;
     },
     sendMessage() {
-      signalRService.sendMessage(`${this.username}: ${this.newMessage}`);
+      signalRService.sendMessage(`${this.newMessage}`);
       this.newMessage = ""; // reset the input field
     },
   },
