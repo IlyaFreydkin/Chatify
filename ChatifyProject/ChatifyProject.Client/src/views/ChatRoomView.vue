@@ -154,8 +154,9 @@ export default {
   },
   methods: {
     onMessageReceive(message) {
-      timestamp: new Date().toLocaleTimeString();
       this.time = new Date().toLocaleTimeString();
+      const lastMessageIndex = this.messages.length - 1;
+      this.$set(this.messages[lastMessageIndex], "time", new Date().toLocaleTimeString());
       this.messages.push(message);
     },
     onGetUser(username) {
