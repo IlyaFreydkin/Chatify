@@ -18,7 +18,7 @@ import signalRService from '../services/SignalRService.js';
             </div>
             <div class="chat-message-content">
               <div class="chat-message-header">
-                <span class="chat-message-author">{{ username }}</span>
+                <span class="chat-message-author">{{ this.username }}</span>
                 <span class="chat-message-timestamp">vor 5 Minuten</span>
               </div>
               <div class="chat-message-text">
@@ -155,7 +155,7 @@ export default {
       this.username = username;
     },
     sendMessage() {
-      signalRService.sendMessage(`${this.newMessage}`);
+      signalRService.sendMessage(`${this.username}: ${this.newMessage}`);
       this.newMessage = ""; // reset the input field
     },
   },
