@@ -164,12 +164,6 @@ export default {
       signalRService.sendMessage(`${this.newMessage}`);
       this.newMessage = ""; // reset the input field
     },
-    updateTimeStamps() {
-      this.messages = this.messages.map((message) => ({
-        ...message,
-        timestamp: new Date().toLocaleTimeString(),
-      }));
-    },
   },
   beforeDestroy() {
     clearInterval(this.interval);
