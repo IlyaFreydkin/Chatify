@@ -153,18 +153,16 @@ export default {
     }
   },
   methods: {
-    onMessageReceive(message, time) {
-      this.messages.push(message, time);
+    onMessageReceive(message) {
+      this.messages.push(message);
       this.time = new Date().toLocaleTimeString();
     },
     onGetUser(username) {
       this.username = username;
     },
     sendMessage() {
-      const time = new Date().toLocaleTimeString();
-      signalRService.sendMessage(`${this.newMessage}`, time);
+      signalRService.sendMessage(`${this.newMessage}`);
       this.newMessage = ""; // reset the input field
-      this.time = time; // update the time for the latest message
     },
   },
   beforeDestroy() {
