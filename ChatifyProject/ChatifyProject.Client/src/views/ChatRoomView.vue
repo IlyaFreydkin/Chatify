@@ -151,12 +151,11 @@ export default {
   },
   methods: {
     onMessageReceive(message) {
-      const [username, content] = message.split(":");
       this.messages.push(message);
       this.username = username;
     },
     sendMessage() {
-      signalRService.sendMessage(`${this.username}: ${this.newMessage}`);
+      signalRService.sendMessage(`${this.newMessage}`);
       this.newMessage = ""; // reset the input field
     },
   },
