@@ -19,7 +19,7 @@ import signalRService from '../services/SignalRService.js';
             <div class="chat-message-content">
               <div class="chat-message-header">
                 <span class="chat-message-author">{{ username }}</span>
-                <span class="chat-message-timestamp">{{ interval }}</span>
+                <span class="chat-message-timestamp">{{ time }}</span>
               </div>
               <div class="chat-message-text">
                 {{ message }}
@@ -138,16 +138,14 @@ export default {
       messages: [],
       newMessage: "",
       username: "",
-      interval: "",
+      time: "",
     };
   },
   async mounted() {
     try {
       signalRService.configureConnection(this.$store.state.userdata.token);
-      signalRService.subscribeEvent("ReceiveMessage", this.onMessageReceive);
-      signalRService.subscribeEvent("ReceiveUser", this.onUserReceive);
-      signalRService.subscribeEvent("ReceiveTime", this.onTimeReceive);
-      this.interval = setInterval(() => this.updateTimeStamps(), 10000);
+      signalRService.subscribeEvent("ReceiveMessage", this.onGetUser);
+      signalRService.subscribeEvent("ReceiveTime", this.onGetTime);
       await signalRService.connect();
     } catch (e) {
       alert(JSON.stringify(e));
@@ -161,8 +159,11 @@ export default {
       this.messages.push(message);
       this.username = username;
     },
-    onUserReceive(username) {
+    onGetUser(username) {
       this.username = username;
+    },
+    onGetTime(time) {
+      this.time = time;
     },
     sendMessage() {
       signalRService.sendMessage(`${this.newMessage}`);

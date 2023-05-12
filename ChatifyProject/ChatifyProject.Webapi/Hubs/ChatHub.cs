@@ -30,6 +30,8 @@ namespace ChatifyProject.Webapi.Hubs
                 $"{Context.UserIdentifier} in Group {group} joined.");
             await Clients.All.SendAsync("ReceiveUser",
                 $"{Context.UserIdentifier}");
+            await Clients.All.SendAsync("ReceiveTime",
+                $"{DateTime.Now}");
         }
 
         /// <summary>
