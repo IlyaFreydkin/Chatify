@@ -155,8 +155,6 @@ export default {
   methods: {
     onMessageReceive(message) {
       this.time = new Date().toLocaleTimeString();
-      const lastMessageIndex = this.messages.length - 1;
-      this.$set(this.messages[lastMessageIndex], "time", new Date().toLocaleTimeString());
       this.messages.push(message);
     },
     onGetUser(username) {
