@@ -31,7 +31,7 @@ namespace ChatifyProject.Webapi.Hubs
             await Clients.All.SendAsync("GetUser",
                 $"{Context.UserIdentifier}");
             await Clients.All.SendAsync("GetTime",
-                $"1");
+                $"{DateTime.Now.ToString("dd/MM/yyyy h:mm tt")}");
         }
 
         /// <summary>
