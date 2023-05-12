@@ -18,7 +18,7 @@ import signalRService from '../services/SignalRService.js';
             </div>
             <div class="chat-message-content">
               <div class="chat-message-header">
-                <span class="chat-message-author">{{ username }}</span>
+                <span class="chat-message-author">{{ this.username }}</span>
               </div>
               <div class="chat-message-text">
                 {{ message }}
@@ -132,6 +132,13 @@ nav {
 
 <script>
 export default {
+  data() {
+    return {
+      messages: [],
+      newMessage: "",
+      username: "",
+    };
+  },
   async mounted() {
     try {
       signalRService.configureConnection(this.$store.state.userdata.token);
@@ -140,13 +147,6 @@ export default {
     } catch (e) {
       alert(JSON.stringify(e));
     }
-  },
-  data() {
-    return {
-      messages: [],
-      newMessage: "",
-      username: "",
-    };
   },
   methods: {
     onMessageReceive(message) {
