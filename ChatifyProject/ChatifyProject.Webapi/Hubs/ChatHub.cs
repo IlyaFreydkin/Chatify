@@ -26,9 +26,10 @@ namespace ChatifyProject.Webapi.Hubs
                 _users.Add(Context.UserIdentifier);
             }
             var group = Context.User?.Claims.FirstOrDefault(c => c.Type == "Group")?.Value;
-            var username = Context.User?.Identity?.Name;
             await Clients.All.SendAsync("ReceiveMessage",
                 $"{Context.UserIdentifier} in Group {group} joined.");
+            await Clients.All.SendAsync("ReceiveUser",
+                $"{Context.UserIdentifier}");
         }
 
         /// <summary>
