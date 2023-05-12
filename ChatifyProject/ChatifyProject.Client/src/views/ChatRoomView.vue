@@ -19,7 +19,6 @@ import signalRService from '../services/SignalRService.js';
             <div class="chat-message-content">
               <div class="chat-message-header">
                 <span class="chat-message-author">{{ username }}</span>
-                <span class="chat-message-timestamp">{{ message.timestamp }}</span>
               </div>
               <div class="chat-message-text">
                 {{ message }}
@@ -152,7 +151,6 @@ export default {
   },
   methods: {
     onMessageReceive(message) {
-      this.message.timestamp = new Date().toLocaleString();
       this.messages.push(message);
     },
     onGetUser(username) {
