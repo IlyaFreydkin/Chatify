@@ -18,7 +18,7 @@ import signalRService from '../services/SignalRService.js';
             </div>
             <div class="chat-message-content">
               <div class="chat-message-header">
-                <span class="chat-message-author">Max Mustermann</span>
+                <span class="chat-message-author">{{ username }}</span>
                 <span class="chat-message-timestamp">vor 5 Minuten</span>
               </div>
               <div class="chat-message-text">
@@ -137,6 +137,7 @@ export default {
     return {
       messages: [],
       newMessage: "",
+      username: "",
     };
   },
   async mounted() {
@@ -150,10 +151,13 @@ export default {
   },
   methods: {
     onMessageReceive(message) {
+      const [username, content] = message.split(":");
       this.messages.push(message);
+      this.username = username;
     },
     sendMessage() {
-      signalRService.sendMessage(this.newMessage);
+      signalRService.sendMessage(`${this.username}: ${this.newMessage}`);
+      this.newMessage = ""; // reset the input field
     },
   },
 };

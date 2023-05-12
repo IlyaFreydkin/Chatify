@@ -5,10 +5,41 @@
   	 		<div class="footer-col">
   	 			<h4>CHATIFY</h4>
   	 			<ul>
-  	 				<li><a href="#">Home</a></li>
-  	 				<li><a href="#">Chat Demo</a></li>
-  	 				<li><a href="#">Warteraum</a></li>
-  	 				<li><a href="#">WebRTC Chat</a></li>
+  	 				<li class="pl-4 pl-md-0 ml-0 ml-md-4">
+                  	<router-link to="/" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    	Home
+                  	</router-link>
+                	</li>
+  	 				<li class="pl-4 pl-md-0 ml-0 ml-md-4">
+                  	<router-link to="/chatroom" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    	Chat Room
+                  	</router-link>
+					</li>
+					<li class="pl-4 pl-md-0 ml-0 ml-md-4">
+                  	<router-link to="/waitingroom" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    	Waitingroom
+                  	</router-link>
+					</li>
+					<li class="pl-4 pl-md-0 ml-0 ml-md-4">
+                  	<router-link to="/webrtc" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    	WebRTC
+                  	</router-link>
+					</li>
+					<li class="pl-4 pl-md-0 ml-0 ml-md-4">
+                  	<router-link to="/service" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    	Service
+                  	</router-link>
+					</li>
+					<li class="pl-4 pl-md-0 ml-0 ml-md-4">
+                  	<router-link to="/journal" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    	Journal
+                  	</router-link>
+					</li>
+					<li class="pl-4 pl-md-0 ml-0 ml-md-4">
+                  	<router-link to="/contact" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    	Contact
+                  	</router-link>
+					</li>
   	 			</ul>
   	 		</div>
   	 		<div class="footer-col">
@@ -65,6 +96,7 @@ ul{
 	list-style: none;
 }
 .footer{
+	margin-top: auto;
 	background-color: #725AC1;
     padding: 50px 0;
     position: relative;
