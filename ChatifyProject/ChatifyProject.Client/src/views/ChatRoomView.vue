@@ -144,20 +144,17 @@ export default {
   async mounted() {
     try {
       signalRService.configureConnection(this.$store.state.userdata.token);
-      signalRService.subscribeEvent("ReceiveMessage", this.onGetUser);
-      signalRService.subscribeEvent("ReceiveTime", this.onGetTime);
+      signalRService.subscribeEvent("ReceiveMessage", this.onMessageReceive);
+      signalRService.subscribeEvent("GetUser", this.onGetUser);
+      signalRService.subscribeEvent("GetTime", this.onGetTime);
       await signalRService.connect();
     } catch (e) {
       alert(JSON.stringify(e));
     }
   },
-  beforeDestroy() {
-    clearInterval(this.interval);
-  },
   methods: {
     onMessageReceive(message) {
       this.messages.push(message);
-      this.username = username;
     },
     onGetUser(username) {
       this.username = username;
@@ -168,12 +165,6 @@ export default {
     sendMessage() {
       signalRService.sendMessage(`${this.newMessage}`);
       this.newMessage = ""; // reset the input field
-    },
-    updateTimeStamps() {
-      this.messages = this.messages.map((message) => ({
-        ...message,
-        timestamp: new Date().toLocaleTimeString(),
-      }));
     },
   },
 };
