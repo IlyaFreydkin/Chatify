@@ -19,7 +19,7 @@ import signalRService from '../services/SignalRService.js';
             <div class="chat-message-content">
               <div class="chat-message-header">
                 <span class="chat-message-author">{{ username }}</span>
-                <span class="chat-message-timestamp">{{ time }}</span>
+                <span class="chat-message-timestamp">{{ message.timestamp }}</span>
               </div>
               <div class="chat-message-text">
                 {{ message }}
@@ -138,7 +138,6 @@ export default {
       messages: [],
       newMessage: "",
       username: "",
-      time: "",
     };
   },
   async mounted() {
@@ -146,7 +145,6 @@ export default {
       signalRService.configureConnection(this.$store.state.userdata.token);
       signalRService.subscribeEvent("ReceiveMessage", this.onMessageReceive);
       signalRService.subscribeEvent("GetUser", this.onGetUser);
-      signalRService.subscribeEvent("GetTime", this.onGetTime);
       await signalRService.connect();
     } catch (e) {
       alert(JSON.stringify(e));
@@ -154,13 +152,11 @@ export default {
   },
   methods: {
     onMessageReceive(message) {
+      message.timestamp = new Date().toLocaleString();
       this.messages.push(message);
     },
     onGetUser(username) {
       this.username = username;
-    },
-    onGetTime(time) {
-      this.time = time;
     },
     sendMessage() {
       signalRService.sendMessage(`${this.newMessage}`);

@@ -30,8 +30,6 @@ namespace ChatifyProject.Webapi.Hubs
                 $"{Context.UserIdentifier} in Group {group} joined.");
             await Clients.All.SendAsync("GetUser",
                 $"{Context.UserIdentifier}");
-            await Clients.All.SendAsync("GetTime",
-                $"{DateTime.Now.ToString("dd/MM/yyyy h:mm tt")}");
         }
 
         /// <summary>
