@@ -57,7 +57,7 @@ public class UserController : ControllerBase
         var user = await _db.Users.FirstOrDefaultAsync(a => a.Name == credentials.username);
         if (user is null) 
         {
-            user = new User(credentials.username, credentials.password, "guest@gmail.com", Userrole.User);
+            user = new User(credentials.username, credentials.password, currentUser.Email, Userrole.User);
             await _db.Users.AddAsync(user);
             try { await _db.SaveChangesAsync(); }
             catch (DbUpdateException) { return BadRequest(); }
