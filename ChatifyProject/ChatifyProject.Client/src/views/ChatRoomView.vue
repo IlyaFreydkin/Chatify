@@ -14,7 +14,7 @@ import signalRService from '../services/SignalRService.js';
         <div class="chat-messages">
           <div v-for="(message, index) in messages" :key="index" class="chat-message">
             <div class="avatar">
-              <img src="https://i.imgur.com/8F6yeT2.png" alt="Avatar">
+              <img src="@/assets/Avatar.jpg" alt="Avatar">
             </div>
             <div class="chat-message-content">
               <div class="chat-message-header">
@@ -28,12 +28,14 @@ import signalRService from '../services/SignalRService.js';
           </div>
         </div>
         <div class="new-message">
-          <textarea v-model="newMessage" placeholder="Nachricht eingeben"></textarea>
-          <button class="btn btn-primary" @click="sendMessage">Senden</button>
+          <textarea v-model="newMessage" placeholder="Nachricht eingeben" @keydown.enter.prevent="sendMessage"></textarea>     
         </div>
       </section>
     </main>
-    <Footer></Footer>
+    <Footer></Footer> 
+    <div class="scroll-to-top" @click="scrollToTop">
+      <i class="gg-arrow-long-up"></i>
+    </div>
   </div>
 </template>
 
@@ -56,6 +58,9 @@ export default {
       alert(JSON.stringify(e));
     }
   },
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  },
   methods: {
     onMessageReceive(message) {
       const time = new Date().toLocaleTimeString();
@@ -65,14 +70,24 @@ export default {
       this.username = username;
     },
     sendMessage() {
-      signalRService.sendMessage(`${this.newMessage}`);
-      this.newMessage = ""; // reset the input field
+      if (this.newMessage.trim() !== '') 
+      { // check if the message is not empty
+        signalRService.sendMessage(`${this.newMessage}`);
+        this.newMessage = ""; // reset the input field
+      }
+    },
+    scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     },
   },
 };
 </script>
 
 <style scoped>
+
+/* main {
+  overflow-y: auto;
+} */
 .chat-room-view {
   display: flex;
   flex-direction: column;
@@ -82,7 +97,7 @@ nav {
   margin-bottom: 0.5rem;
 }
 .chat-room {
-  background-color: #36393f;
+  background-color: #c6a7f3;
   border-radius: 0.25rem;
   box-shadow: 0 1px 0 rgba(4, 4, 5, 0.2);
   display: flex;
@@ -92,7 +107,7 @@ nav {
   overflow-y: scroll;
 }
 .chat-room-title {
-  color: #fff;
+  background-color: #7f4ccc;
   font-size: 1.5rem;
   font-weight: 500;
   margin: 0;
@@ -102,6 +117,7 @@ nav {
   display: flex;
   flex-direction: column;
   margin: 0 1rem 1rem 1rem;
+  margin-top: 1rem;
 }
 .chat-message {
   display: flex;
@@ -127,7 +143,6 @@ nav {
   margin-bottom: 0.25rem;
 }
 .chat-message-author {
-  color: #fff;
   font-size: 1rem;
   font-weight: 500;
   margin-right: 0.5rem;
@@ -137,17 +152,67 @@ nav {
   font-size: 0.875rem;
 }
 .chat-message-text {
-  background-color: #40444b;
+  background-color: #fff;
   border-radius: 0.25rem;
-  color: #fff;
   font-size: 1rem;
   padding: 0.75rem;
 }
 .new-message {
-  background-color: #2f3136;
+  background-color: #8167a9;
   border-radius: 0.25rem;
   box-shadow: 0 1px 0 rgba(4, 4, 5, 0.2);
   display: flex;
-  margin: 0
+  margin: 0;
+}
+textarea {
+  background-color: #fff;
+  border: none;
+  border-radius: 0.25rem;
+  flex-grow: 1;
+  font-size: 1rem;
+  margin: 0.2rem;
+  outline: none;
+  resize: none;
+}
+/* scrolling */
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.scroll-to-top i {
+  font-size: 1.5rem;
+}
+.gg-arrow-long-up,
+.gg-arrow-long-up::after {
+    display: block;
+    box-sizing: border-box;
+    width: 6px
+}
+.gg-arrow-long-up {
+    position: relative;
+    transform: scale(var(--ggs,1));
+    border-right: 2px solid transparent;
+    border-left: 2px solid transparent;
+    box-shadow: inset 0 0 0 2px;
+    height: 24px
+}
+.gg-arrow-long-up::after {
+    content: "";
+    position: absolute;
+    height: 6px;
+    border-top: 2px solid;
+    border-left: 2px solid;
+    transform: rotate(45deg);
+    top: 0;
+    left: -2px
 }
 </style>

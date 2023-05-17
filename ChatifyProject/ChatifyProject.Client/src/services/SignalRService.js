@@ -10,7 +10,7 @@ class SignalRService {
         this.connected = false;
     }
     configureConnection(token) {
-        const host = process.env.NODE_ENV == 'production' ? "/chatHub" : "https://localhost:5001/chatHub";
+        const host = process.env.NODE_ENV == 'production' ? "/chatHub" : "http://localhost:5001/chatHub";
         // See https://learn.microsoft.com/en-us/javascript/api/@microsoft/signalr/hubconnectionbuilder?view=signalr-js-latest
         this.connection = new SignalR.HubConnectionBuilder()
             .withUrl(`${host}`, { accessTokenFactory: () => token })
