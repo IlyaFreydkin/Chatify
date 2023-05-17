@@ -21,7 +21,7 @@ const router = createRouter({
     {
       path: '/chatroom',
       name: 'chatroom',
-      meta: { authorize: false },
+      meta: { authorize: true },
       component: ChatRoomView
     },
     {
@@ -63,7 +63,7 @@ const router = createRouter({
     {
       path: '/webrtc',
       name: 'webrtc',
-      meta: { authorize: false }, //muss später auf true gesetzt werden
+      meta: { authorize: true }, //muss später auf true gesetzt werden
       component: WebRTC
     },
   ]
