@@ -26,11 +26,13 @@ namespace ChatifyProject.Webapi.Hubs
                 _users.Add(Context.UserIdentifier);
             }
             var group = Context.User?.Claims.FirstOrDefault(c => c.Type == "Group")?.Value;
+            //var joinedMessage = $"{Context.UserIdentifier} in Group {group} joined.";
+
+            //await Clients.All.SendAsync("ReceiveMessage", new { text = joinedMessage, username = Context.UserIdentifier });
             await Clients.All.SendAsync("ReceiveMessage",
                 $"{Context.UserIdentifier} in Group {group} joined.");
-            await Clients.All.SendAsync("GetUser",
-                $"{Context.UserIdentifier}");
         }
+
 
         /// <summary>
         /// Invoked by
@@ -42,7 +44,9 @@ namespace ChatifyProject.Webapi.Hubs
             // Can be received with
             //     connection.on("ReceiveMessage", callback);
             // in Javascript SignalR client.
-            await Clients.All.SendAsync("ReceiveMessage", message);
+            await Clients.All.SendAsync(
+                "ReceiveMessage", 
+                new { Message = message, Username = Context.UserIdentifier });
         }
         public override Task OnDisconnectedAsync(Exception? exception)
         {
