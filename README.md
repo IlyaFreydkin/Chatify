@@ -18,7 +18,7 @@ Chatify ist eine Single Page Application zum live Video chatten
 | Ilya *Freydkin*, 3CHIF | fre22343@spengergasse.at |                 |
 | Richard *Liu*, 3CHIF   | liu2291@spengergasse.at  |                 |
 | Uros *Veljic*, 3CHIF   | vel22675@spengergasse.at |                 |
-| Janus *Messner*, 3CHIF | mes22377@spengergasse.at |                 |
+| Anus *Messner*, 3CHIF | mes22377@spengergasse.at |                 |
 | Mohamed *Ahmed*, 3CHIF | ahm22106@spengergasse.at |                 |
 
 ## Voraussetzungen
