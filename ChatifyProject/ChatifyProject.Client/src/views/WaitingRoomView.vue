@@ -17,11 +17,6 @@ import Footer from '../components/Footer.vue';
       </aside>
       <section class="waiting-room">
         <h2 class="waiting-room-title">Waiting Room</h2>
-          <ul>Connected Users:
-            <div v-for="user in connectedUsers" :key="user">
-              <ul>{{ user }} <button @click="challenge(user)">Challenge</button></ul>
-            </div>
-          </ul>
           <!-- <div>
             Incoming Challenges:
           </div>
@@ -48,25 +43,27 @@ export default {
     };
   },
   async mounted() {
-    this.connect();
+    // this.connect();
     try { 
         signalRService.configureConnection(this.$store.state.userdata.token);
         await signalRService.connect();
+        signalRService.subscribeEvent("SetWaitingroomState", this.addUser);
         await signalRService.enterWaitingroom();
-        await this.sendConnectedUsers();
+        //await this.sendConnectedUsers();
         console.log(this.connectedUsers);
     } catch (e) {
         alert(JSON.stringify(e));
     }
   },
   unmounted() {
+    signalRService.leaveWaitingroom();
   },
   methods: {
     async connect() {
       await signalRService.connect();
-      signalRService.subscribeEvent("SetWaitingroomState", this.addUser);
+      // signalRService.subscribeEvent("SetWaitingroomState", this.addUser);
       // Start the SignalR connection
-      //await signalRService.sendConnectedUsers(); 
+      // await signalRService.sendConnectedUsers(); 
     },
     selectUser(user) {
       this.$router.push({ name: 'chatRoom', params: { username: user } });

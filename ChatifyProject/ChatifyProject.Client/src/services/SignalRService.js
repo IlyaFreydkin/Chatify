@@ -51,10 +51,11 @@ class SignalRService {
     }
     //Waitingroom
     async enterWaitingroom() {
+        if (!this.connected) { throw new Error("Invalid state. Not connected."); }
         await this.connection.invoke('EnterWaitingroom');
     }
     async leaveWaitingroom() {
-        if (!this.connected || !this.connection) { throw new Error("Invalid state. Not connected."); }
+        if (!this.connected) { throw new Error("Invalid state. Not connected."); }
         await this.connection.invoke("LeaveWaitingroom");
     }
 }
