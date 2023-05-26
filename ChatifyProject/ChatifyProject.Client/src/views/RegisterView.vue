@@ -28,7 +28,11 @@ import Footer from '../components/Footer.vue'
                 </div>
                 <div class="form-field d-flex align-items-center">
                     <span class="fas fa-key"></span>
-                    <input v-model="model.password" type="password" name="password" id="pwd" placeholder="Password">
+                    <input v-model="model.email" type="text" name="password" id="pwd" placeholder="Password">
+                </div>
+                <div class="form-field d-flex align-items-center">
+                    <span class="far fa-user"></span>
+                    <input v-model="model.name" type="text" name="userName" id="userName" placeholder="Username">
                 </div>
                 <button type="button" class="btn mt-3" v-on:click="sendLoginData">Register</button>
             </form>
