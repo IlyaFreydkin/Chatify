@@ -17,11 +17,19 @@ class SignalRService {
             .withAutomaticReconnect()
             .configureLogging(SignalR.LogLevel.Information)
             .build();
-    }
+    } 
     async connect() {
-        await this.connection.start();
-        this.connected = true;
-    }
+        try {
+          if (this.connection.state === SignalR.HubConnectionState.Disconnected) {
+            await this.connection.start();
+            this.connected = true;
+          }
+        } catch (error) {
+          console.error("Failed to connect to SignalR hub:", error);
+          this.connected = false;
+          throw error;
+        }
+      }    
     subscribeEvent(type, callback) {
         this.connection.on(type, callback);
     }
@@ -40,6 +48,14 @@ class SignalRService {
         if (!this.connected) { throw new Error("Invalid state. Not connected."); }
         const users = await this.connection.invoke("SendConnectedUsers");
         return users;
+    }
+    //Waitingroom
+    async enterWaitingroom() {
+        await this.connection.invoke('EnterWaitingroom');
+    }
+    async leaveWaitingroom() {
+        if (!this.connected || !this.connection) { throw new Error("Invalid state. Not connected."); }
+        await this.connection.invoke("LeaveWaitingroom");
     }
 }
 

@@ -25,6 +25,12 @@ const router = createRouter({
       component: ChatRoomView
     },
     {
+      path: '/chatroom/:username',
+      name: 'chatRoom',
+      meta: { authorize: true },
+      component: ChatRoomView
+    },
+    {
       path: '/waitingroom',
       name: 'waitingroom',
       meta: { authorize: true },

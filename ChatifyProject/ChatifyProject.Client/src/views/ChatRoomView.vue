@@ -1,17 +1,23 @@
 <script setup>
+import axios from 'axios';
+import signalRService from '../services/SignalRService.js';
 import NavBar from '../components/NavBar.vue';
 import Footer from '../components/Footer.vue';
-import WaitingRoomViewVue from '../views/WaitingRoomView.vue';
-import signalRService from '../services/SignalRService.js';
 </script>
 
 <template>
   <div class="chat-room-view">
     <NavBar></NavBar>
-    <main>
+    <main class="main-container">
+      <aside class="user-list">
+        <h3>Active Users</h3>
+        <ul>
+          <li v-for="user in connectedUsers" :key="user" @click="selectUser(user)">{{ user }}</li>
+        </ul>
+      </aside>
       <section class="chat-room">
-        <h2 class="chat-room-title">General</h2>
-        <div class="chat-messages">
+        <h3 class="chat-room-title"> General </h3>
+        <div class="chat-messages" ref="chatContainer">
           <div v-for="(message, index) in messages" :key="index" class="chat-message">
             <div class="avatar">
               <img src="@/assets/Avatar.jpg" alt="Avatar">
@@ -36,77 +42,103 @@ import signalRService from '../services/SignalRService.js';
     <div class="scroll-to-top" @click="scrollToTop">
       <i class="gg-arrow-long-up"></i>
     </div>
-  </div>
+  </div>  
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        messages: [],
-        newMessage: "",
-        username: ""
-      };
-    },
-    async mounted() {
-      try { 
+export default {
+  data() {
+    return {
+      connectedUsers: [],
+      messages: [],
+      newMessage: "",
+    };
+  },
+  async mounted() {
+    this.connect();
+    try { 
         signalRService.configureConnection(this.$store.state.userdata.token);
         signalRService.subscribeEvent("ReceiveMessage", this.onMessageReceive);
         await signalRService.connect();
-      } catch (e) {
+        await signalRService.enterWaitingroom();
+        await this.sendConnectedUsers();
+    } catch (e) {
         alert(JSON.stringify(e));
+    }
+  },
+  unmounted() {
+  },
+  scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  },
+  methods: {
+    async connect() {
+      signalRService.subscribeEvent("SetWaitingroomState", this.addUser);
+      await signalRService.enterWaitingroom();
+    },
+    selectUser(user) {
+      this.$router.push({ name: 'chatRoom', params: { username: user } });
+    },
+    enterWaitingroom() {
+      signalRService.enterWaitingroom();
+    },
+    leaveWaitingroom() {
+      signalRService.leaveWaitingroom();
+    },
+    async sendConnectedUsers() { 
+      try {
+        const users = await signalRService.sendConnectedUsers();
+        this.connectedUsers = users;
+      } catch (error) {
+        console.error("Error retrieving connected users:", error);
+        throw error;
+      }
+    },
+    // Message
+    onMessageReceive(message) {
+      const time = new Date().toLocaleTimeString();
+      if(message.message == undefined) {
+        this.messages.push({text: message, time: time, username: ""});
+      }
+      else{
+        this.messages.push({text: message.message, time: time, username: message.username});
+      }
+    },
+    sendMessage() {
+      if (this.newMessage.trim() !== '') 
+      { // check if the message is not empty
+        signalRService.sendMessage(`${this.newMessage}`);
+        this.newMessage = ""; // reset the input field
       }
     },
     scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const chatContainer = this.$refs.chatContainer;
+      chatContainer.scrollTop = 0;
     },
-    methods: {
-      onMessageReceive(message) {
-        const time = new Date().toLocaleTimeString();
-        if(message.message == undefined) {
-          this.messages.push({text: message, time: time, username: ""});
-        }
-        else{
-          this.messages.push({text: message.message, time: time, username: message.username});
-        }
-        
-      },
-      sendMessage() {
-        if (this.newMessage.trim() !== '') 
-        { // check if the message is not empty
-          signalRService.sendMessage(`${this.newMessage}`);
-          this.newMessage = ""; // reset the input field
-        }
-      },
-      scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      },
+    scrollToBottom() {
+      const chatContainer = this.$refs.chatContainer;
+      chatContainer.scrollTop = chatContainer.scrollHeight;
     },
-  };
+  },
+  updated() {
+    this.scrollToBottom();
+  },
+};
 </script>
 
 <style scoped>
-
-/* main {
-  overflow-y: auto;
-} */
 .chat-room-view {
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
-nav {
-  margin-bottom: 0.5rem;
-}
 .chat-room {
   background-color: #c6a7f3;
   border-radius: 0.25rem;
   box-shadow: 0 1px 0 rgba(4, 4, 5, 0.2);
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  margin: 0.5rem;
   overflow-y: scroll;
+  flex-grow: 1;
+  height: fit-content;
 }
 .chat-room-title {
   background-color: #7f4ccc;
@@ -120,15 +152,17 @@ nav {
   flex-direction: column;
   margin: 0 1rem 1rem 1rem;
   margin-top: 1rem;
+  max-height: 40vh; 
+  overflow-y: auto;
 }
 .chat-message {
   display: flex;
   margin-bottom: 1rem;
 }
 .avatar {
-  height: 36px;
+  height: 50px;
+  width: 50px;
   margin-right: 0.5rem;
-  width: 36px;
 }
 .avatar img {
   border-radius: 50%;
@@ -165,6 +199,7 @@ nav {
   box-shadow: 0 1px 0 rgba(4, 4, 5, 0.2);
   display: flex;
   margin: 0;
+
 }
 textarea {
   background-color: #fff;
@@ -176,6 +211,34 @@ textarea {
   outline: none;
   resize: none;
 }
+.main-container {
+  display: flex;
+}
+.user-list {
+  background-color: #f2f2f2;
+  padding: 1rem;
+  width: 250px;
+}
+.user-list h3 {
+  margin-top: 0;
+}
+.user-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.user-list li {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.user-list li:hover {
+  background-color: #c6a7f3;
+  color: white;
+}
+nav {
+  margin-bottom: 0.5rem;
+}
+
 /* scrolling */
 .scroll-to-top {
   position: fixed;
