@@ -30,11 +30,11 @@ import Login from '../components/Login.vue';
                     Chat Room
                   </router-link>
                 </li>
-                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                <!-- <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
                   <router-link to="/waitingroom" class="nav-link">
                     Waitingroom
                   </router-link>
-                </li>
+                </li> -->
                 <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
                   <router-link to="/webrtc" class="nav-link">
                     WebRTC

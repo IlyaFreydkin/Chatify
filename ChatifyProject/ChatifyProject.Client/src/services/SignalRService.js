@@ -39,25 +39,16 @@ class SignalRService {
         else
             this.connection.off(type, callback);
     }
-    async sendMessage(message) {
+    async sendMessageToAll(message) {
         if (!this.connected) { throw new Error("Invalid state. Not connected."); }
-        // SendMessage is corresponding to the C# Method in ChessHub.
-        await this.connection.invoke("SendMessage", message);
+        // SendMessageToAll is corresponding to the C# Method in SignalR Hub.
+        await this.connection.invoke("SendMessageToAll", message);
     }
-    async sendConnectedUsers() {
+    async requestConnectedUsers() {
         if (!this.connected) { throw new Error("Invalid state. Not connected."); }
-        const users = await this.connection.invoke("SendConnectedUsers");
-        return users;
-    }
-    //Waitingroom
-    async enterWaitingroom() {
-        if (!this.connected) { throw new Error("Invalid state. Not connected."); }
-        await this.connection.invoke('EnterWaitingroom');
-    }
-    async leaveWaitingroom() {
-        if (!this.connected) { throw new Error("Invalid state. Not connected."); }
-        await this.connection.invoke("LeaveWaitingroom");
-    }
+        // RequestConnectedUsers is corresponding to the C# Method in SignalR Hub.
+        await this.connection.invoke("RequestConnectedUsers");
+    }    
 }
 
 // Export a singleton (only 1 instance in the spa to make state management easier)

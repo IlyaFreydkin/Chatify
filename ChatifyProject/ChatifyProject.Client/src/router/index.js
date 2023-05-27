@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import store from '../store.js'
 import HomeView from '../views/HomeView.vue'
 import ChatRoomView from '../views/ChatRoomView.vue'
-import WaitingRoomVue from '../views/WaitingRoomView.vue'
 import Service from '../views/ServiceView.vue'
 import Journal from '../views/JournalView.vue'
 import Contact from '../views/ContactView.vue'
@@ -29,13 +28,7 @@ const router = createRouter({
       name: 'chatRoom',
       meta: { authorize: true },
       component: ChatRoomView
-    },
-    {
-      path: '/waitingroom',
-      name: 'waitingroom',
-      meta: { authorize: true },
-      component: WaitingRoomVue
-    },   
+    },  
     {
       path: '/service',
       name: 'service',

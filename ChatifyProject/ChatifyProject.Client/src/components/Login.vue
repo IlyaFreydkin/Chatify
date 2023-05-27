@@ -1,5 +1,6 @@
 <script setup>
 import axios from 'axios';
+import signalRService from '../services/SignalRService.js';
 </script>
 
 <template>
@@ -46,6 +47,8 @@ export default {
                 const userdata = (await axios.post('user/login', this.loginModel)).data;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${userdata.token}`;
                 this.$store.commit('authenticate', userdata);
+                signalRService.configureConnection(userdata.token);
+                await signalRService.connect();                
             } catch (e) {
                 if (e.response.status == 401) {
                     alert('Login failed. Invalid credentials.');

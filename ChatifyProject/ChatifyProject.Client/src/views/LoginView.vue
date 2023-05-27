@@ -1,7 +1,7 @@
 <script setup>
 import axios from 'axios';
-import NavBar from '../components/NavBar.vue';
-import Footer from '../components/Footer.vue';
+import signalRService from '../services/SignalRService.js';
+
 </script>
 
 <template>
@@ -22,12 +22,14 @@ import Footer from '../components/Footer.vue';
 <style scoped>
 .loginForm {
     display: flex;
-    gap:1rem;
+    gap: 1rem;
 }
+
 a {
     text-decoration: none;
 
 }
+
 a:hover {
     color: lightgray;
     text-decoration: underline;
@@ -54,6 +56,8 @@ export default {
                 const userdata = (await axios.post('user/login', this.model)).data;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${userdata.token}`;
                 this.$store.commit('authenticate', userdata);
+                signalRService.configureConnection(userdata.token);
+                await signalRService.connect();
             } catch (e) {
                 if (e.response.status == 401) {
                     alert('Login failed. Invalid credentials.');

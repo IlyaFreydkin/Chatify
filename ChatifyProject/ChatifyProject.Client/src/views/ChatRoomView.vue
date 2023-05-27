@@ -27,22 +27,22 @@ import Footer from '../components/Footer.vue';
                 <span class="chat-message-user">{{ message.username }}</span>
               </div>
               <div class="chat-message-text">
-                {{ message.text }} 
-                <span class="chat-message-timestamp">{{ message.time }}</span> 
+                {{ message.text }}
+                <span class="chat-message-timestamp">{{ message.time }}</span>
               </div>
             </div>
           </div>
         </div>
         <div class="new-message">
-          <textarea v-model="newMessage" placeholder="Nachricht eingeben" @keydown.enter.prevent="sendMessage"></textarea>     
+          <textarea v-model="newMessage" placeholder="Nachricht eingeben" @keydown.enter.prevent="sendMessageToAll"></textarea>
         </div>
       </section>
     </main>
-    <Footer></Footer> 
+    <Footer></Footer>
     <div class="scroll-to-top" @click="scrollToTop">
       <i class="gg-arrow-long-up"></i>
     </div>
-  </div>  
+  </div>
 </template>
 
 <script>
@@ -55,59 +55,39 @@ export default {
     };
   },
   async mounted() {
-    this.connect();
-    try { 
-        signalRService.configureConnection(this.$store.state.userdata.token);
-        signalRService.subscribeEvent("ReceiveMessage", this.onMessageReceive);
-        await signalRService.connect();
-        await signalRService.enterWaitingroom();
-        await this.sendConnectedUsers();
+    try {
+      signalRService.subscribeEvent("ReceiveMessage", this.onMessageReceive);
+      signalRService.subscribeEvent("ReceiveConnectedUsers", this.onReceiveConnectedUsers);
+      signalRService.requestConnectedUsers();
     } catch (e) {
-        alert(JSON.stringify(e));
+      alert(JSON.stringify(e));
     }
   },
   unmounted() {
   },
   scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   },
   methods: {
-    async connect() {
-      signalRService.subscribeEvent("SetWaitingroomState", this.addUser);
-      await signalRService.enterWaitingroom();
-    },
     selectUser(user) {
       this.$router.push({ name: 'chatRoom', params: { username: user } });
-    },
-    enterWaitingroom() {
-      signalRService.enterWaitingroom();
-    },
-    leaveWaitingroom() {
-      signalRService.leaveWaitingroom();
-    },
-    async sendConnectedUsers() { 
-      try {
-        const users = await signalRService.sendConnectedUsers();
-        this.connectedUsers = users;
-      } catch (error) {
-        console.error("Error retrieving connected users:", error);
-        throw error;
-      }
     },
     // Message
     onMessageReceive(message) {
       const time = new Date().toLocaleTimeString();
-      if(message.message == undefined) {
-        this.messages.push({text: message, time: time, username: ""});
+      if (message.message == undefined) {
+        this.messages.push({ text: message, time: time, username: "" });
       }
-      else{
-        this.messages.push({text: message.message, time: time, username: message.username});
+      else {
+        this.messages.push({ text: message.message, time: time, username: message.username });
       }
     },
-    sendMessage() {
-      if (this.newMessage.trim() !== '') 
-      { // check if the message is not empty
-        signalRService.sendMessage(`${this.newMessage}`);
+    onReceiveConnectedUsers(users) {
+      this.connectedUsers = users;
+    },
+    sendMessageToAll() {
+      if (this.newMessage.trim() !== '') { // check if the message is not empty
+        signalRService.sendMessageToAll(`${this.newMessage}`);
         this.newMessage = ""; // reset the input field
       }
     },
@@ -132,6 +112,7 @@ export default {
   flex-direction: column;
   height: 100vh;
 }
+
 .chat-room {
   background-color: #c6a7f3;
   border-radius: 0.25rem;
@@ -140,6 +121,7 @@ export default {
   flex-grow: 1;
   height: fit-content;
 }
+
 .chat-room-title {
   background-color: #7f4ccc;
   font-size: 1.5rem;
@@ -147,52 +129,62 @@ export default {
   margin: 0;
   padding: 1rem;
 }
+
 .chat-messages {
   display: flex;
   flex-direction: column;
   margin: 0 1rem 1rem 1rem;
   margin-top: 1rem;
-  max-height: 40vh; 
+  max-height: 40vh;
   overflow-y: auto;
 }
+
 .chat-message {
   display: flex;
   margin-bottom: 1rem;
 }
+
 .avatar {
   height: 50px;
   width: 50px;
   margin-right: 0.5rem;
 }
+
 .avatar img {
   border-radius: 50%;
   height: 100%;
   width: 100%;
 }
+
 .chat-message-content {
   display: flex;
   flex-direction: column;
 }
+
 .chat-message-header {
   align-items: center;
   display: flex;
   margin-bottom: 0.25rem;
 }
+
 .chat-message-user {
   font-size: 1rem;
   font-weight: 500;
   margin-right: 0.5rem;
 }
+
 .chat-message-timestamp {
   color: #8e9297;
   font-size: 0.875rem;
 }
+
 .chat-message-text {
   background-color: #fff;
   border-radius: 0.25rem;
   font-size: 1rem;
   padding: 0.75rem;
 }
+
 .new-message {
   background-color: #8167a9;
   border-radius: 0.25rem;
@@ -201,6 +193,7 @@ export default {
   margin: 0;
 
 }
+
 textarea {
   background-color: #fff;
   border: none;
@@ -211,30 +204,37 @@ textarea {
   outline: none;
   resize: none;
 }
+
 .main-container {
   display: flex;
 }
+
 .user-list {
   background-color: #f2f2f2;
   padding: 1rem;
   width: 250px;
 }
+
 .user-list h3 {
   margin-top: 0;
 }
+
 .user-list ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
+
 .user-list li {
   padding: 0.5rem;
   cursor: pointer;
 }
+
 .user-list li:hover {
   background-color: #c6a7f3;
   color: white;
 }
+
 nav {
   margin-bottom: 0.5rem;
 }
@@ -253,31 +253,35 @@ nav {
   align-items: center;
   cursor: pointer;
 }
+
 .scroll-to-top i {
   font-size: 1.5rem;
 }
+
 .gg-arrow-long-up,
 .gg-arrow-long-up::after {
-    display: block;
-    box-sizing: border-box;
-    width: 6px
+  display: block;
+  box-sizing: border-box;
+  width: 6px
 }
+
 .gg-arrow-long-up {
-    position: relative;
-    transform: scale(var(--ggs,1));
-    border-right: 2px solid transparent;
-    border-left: 2px solid transparent;
-    box-shadow: inset 0 0 0 2px;
-    height: 24px
+  position: relative;
+  transform: scale(var(--ggs, 1));
+  border-right: 2px solid transparent;
+  border-left: 2px solid transparent;
+  box-shadow: inset 0 0 0 2px;
+  height: 24px
 }
+
 .gg-arrow-long-up::after {
-    content: "";
-    position: absolute;
-    height: 6px;
-    border-top: 2px solid;
-    border-left: 2px solid;
-    transform: rotate(45deg);
-    top: 0;
-    left: -2px
+  content: "";
+  position: absolute;
+  height: 6px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+  transform: rotate(45deg);
+  top: 0;
+  left: -2px
 }
 </style>
