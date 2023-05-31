@@ -52,6 +52,7 @@ export default {
       connectedUsers: [],
       messages: [],
       newMessage: "",
+      selectedUser: null,
     };
   },
   async mounted() {
@@ -70,13 +71,14 @@ export default {
   },
   methods: {
     selectUser(user) {
-      this.$router.push({ name: 'chatRoom', params: { username: user } });
+      this.selectedUser = user;
+      console.log(user);
     },
     // Message
     onMessageReceive(message) {
       const time = new Date().toLocaleTimeString();
       if (message.message == undefined) {
-        this.messages.push({ text: message, time: time, username: "" });
+        this.messages.push({ text: message, time: time, username: "System" });
       }
       else {
         this.messages.push({ text: message.message, time: time, username: message.username });
@@ -87,7 +89,7 @@ export default {
     },
     sendMessageToAll() {
       if (this.newMessage.trim() !== '') { // check if the message is not empty
-        signalRService.sendMessageToAll(`${this.newMessage}`);
+        signalRService.sendMessageToAll(`${this.newMessage}`, this.selectedUser);
         this.newMessage = ""; // reset the input field
       }
     },

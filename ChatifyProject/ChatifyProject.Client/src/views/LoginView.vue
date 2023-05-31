@@ -27,7 +27,6 @@ import signalRService from '../services/SignalRService.js';
 
 a {
     text-decoration: none;
-
 }
 
 a:hover {

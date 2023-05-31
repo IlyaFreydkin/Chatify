@@ -39,10 +39,10 @@ class SignalRService {
         else
             this.connection.off(type, callback);
     }
-    async sendMessageToAll(message) {
+    async sendMessageToAll(message, user) {
         if (!this.connected) { throw new Error("Invalid state. Not connected."); }
         // SendMessageToAll is corresponding to the C# Method in SignalR Hub.
-        await this.connection.invoke("SendMessageToAll", message);
+        await this.connection.invoke("SendMessageToAll", message, user);
     }
     async requestConnectedUsers() {
         if (!this.connected) { throw new Error("Invalid state. Not connected."); }

@@ -42,14 +42,23 @@ namespace ChatifyProject.Webapi.Hubs
         ///     connection.invoke("SendMessage", message);
         /// in Javascript SignalR client.
         /// </summary>
-        public async Task SendMessageToAll(string message)
+        public async Task SendMessageToAll(string message, string user)
         {
             // Can be received with
             //     connection.on("ReceiveMessage", callback);
             // in Javascript SignalR client.
-            await Clients.All.SendAsync(
+            if(string.IsNullOrEmpty(user))
+            {
+                await Clients.All.SendAsync(
                 "ReceiveMessage",
                 new { Message = message, Username = Context.UserIdentifier });
+            }
+            else
+            {
+               await Clients.User(user).SendAsync(
+               "ReceiveMessage",
+               new { Message = message, Username = Context.UserIdentifier });
+            }
         }
 
         /// <summary>
