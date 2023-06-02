@@ -36,16 +36,9 @@
                     WebRTC
                   </router-link>
                 </li>
-                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                  <router-link to="/service" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    Service
-                  </router-link>
-                </li>
-                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                  <router-link to="/journal" class="nav-link">
-                    Journal
-                  </router-link>
-                </li>
+               
+                
+
                 <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
                   <router-link to="/contact" class="nav-link">
                     Contact
@@ -72,7 +65,7 @@ import $ from 'jquery';
 
 export default {
 	mounted() {
-    // Code hier einfügen
+   
     var header = $(".start-style");
     $(window).scroll(function() {
       var scroll = $(window).scrollTop();
