@@ -20,9 +20,25 @@ import Footer from '../components/Footer.vue';
         </ul>
       </aside>
       <section class="chat-room">
-        <h3 class="chat-room-title"> Chatify   </h3>
+        <h3 class="chat-room-title"> {{this.selectedUser}} </h3>
         <div class="chat-messages" ref="chatContainer">
-          <img src="@/assets/Chat.png" alt="Chat">
+          <div v-for="(message, index) in messages" :key="index" class="chat-message">
+            <div class="avatar">
+              <img src="@/assets/Avatar.jpg" alt="Avatar">
+            </div>
+            <div class="chat-message-content">
+              <div class="chat-message-header">
+                <span class="chat-message-user">{{ message.username }}</span>
+              </div>
+              <div class="chat-message-text">
+                {{ message.text }}
+                <span class="chat-message-timestamp">{{ message.time }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="new-message">
+          <textarea v-model="newMessage" placeholder="Nachricht eingeben" @keydown.enter.prevent="sendMessageToAll"></textarea>
         </div>
       </section>
     </main>
@@ -60,6 +76,7 @@ export default {
   methods: {
     selectUser(user) {
       this.selectedUser = user;
+      this.messages = [];
       console.log(user);
       this.$router.push(`/chatroom/${user}`);
     },
@@ -70,7 +87,13 @@ export default {
         this.messages.push({ text: message, time: time, username: "System" });
       }
       else {
-        this.messages.push({ text: message.message, time: time, username: message.username });
+        if (
+          this.selectedUser === this.$store.state.userdata.username ||
+          message.username === this.selectedUser ||
+          message.username === this.$store.state.userdata.username
+        ) {
+          this.messages.push({ text: message.message, time: time, username: message.username });
+        }
       }
     },
     onReceiveConnectedUsers(users) {
@@ -82,7 +105,7 @@ export default {
           signalRService.sendMessageToAll(this.newMessage);
         } else {
           signalRService.sendMessageToAll(this.newMessage, this.selectedUser);
-          //signalRService.sendMessageToAll(this.newMessage, this.$store.state.userdata.username);
+          signalRService.sendMessageToAll(this.newMessage, this.$store.state.userdata.username);
         }
         this.newMessage = "";
       }
@@ -98,6 +121,9 @@ export default {
   },
   updated() {
     this.scrollToBottom();
+  },
+  created() {
+    this.selectedUser = this.$route.params.user;
   },
 };
 </script>
@@ -115,7 +141,7 @@ export default {
   box-shadow: 0 1px 0 rgba(4, 4, 5, 0.2);
   overflow-y: scroll;
   flex-grow: 1;
-  height: calc(70vh - 3.5rem - 1rem - 1rem - 1rem); /* Adjust the value based on your layout */
+  height: fit-content;
 }
 
 .chat-room-title {
@@ -140,12 +166,45 @@ export default {
   margin-bottom: 1rem;
 }
 
-.chat-messages img {
+.avatar {
+  height: 50px;
+  width: 50px;
+  margin-right: 0.5rem;
+}
+
+.avatar img {
+  border-radius: 50%;
+  height: 100%;
   width: 100%;
-  height: auto;
-  max-height: 200px;
-  object-fit: contain;
-  margin: 0 auto; 
+}
+
+.chat-message-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-message-header {
+  align-items: center;
+  display: flex;
+  margin-bottom: 0.25rem;
+}
+
+.chat-message-user {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-right: 0.5rem;
+}
+
+.chat-message-timestamp {
+  color: #8e9297;
+  font-size: 0.875rem;
+}
+
+.chat-message-text {
+  background-color: #fff;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  padding: 0.75rem;
 }
 
 .new-message {
@@ -155,6 +214,17 @@ export default {
   display: flex;
   margin: 0;
 
+}
+
+textarea {
+  background-color: #fff;
+  border: none;
+  border-radius: 0.25rem;
+  flex-grow: 1;
+  font-size: 1rem;
+  margin: 0.2rem;
+  outline: none;
+  resize: none;
 }
 
 .main-container {
@@ -189,5 +259,51 @@ export default {
 
 nav {
   margin-bottom: 0.5rem;
+}
+
+/* scrolling */
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.scroll-to-top i {
+  font-size: 1.5rem;
+}
+
+.gg-arrow-long-up,
+.gg-arrow-long-up::after {
+  display: block;
+  box-sizing: border-box;
+  width: 6px
+}
+
+.gg-arrow-long-up {
+  position: relative;
+  transform: scale(var(--ggs, 1));
+  border-right: 2px solid transparent;
+  border-left: 2px solid transparent;
+  box-shadow: inset 0 0 0 2px;
+  height: 24px
+}
+
+.gg-arrow-long-up::after {
+  content: "";
+  position: absolute;
+  height: 6px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+  transform: rotate(45deg);
+  top: 0;
+  left: -2px
 }
 </style>

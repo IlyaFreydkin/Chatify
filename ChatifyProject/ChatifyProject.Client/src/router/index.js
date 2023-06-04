@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import store from '../store.js'
 import HomeView from '../views/HomeView.vue'
 import ChatRoomView from '../views/ChatRoomView.vue'
+import ChatRoom from '../components/ChatRoom.vue'
 import Service from '../views/ServiceView.vue'
 import Journal from '../views/JournalView.vue'
 import Contact from '../views/ContactView.vue'
@@ -22,6 +23,12 @@ const router = createRouter({
       name: 'chatroom',
       meta: { authorize: true },
       component: ChatRoomView
+    },
+    {
+      path: '/chatroom/:user', // Anpassung: Parameter ":user" für die Benutzer-ID
+      name: 'chatroom/:user',
+      meta: { authorize: true },
+      component: ChatRoom
     },
     {
       path: '/service',
