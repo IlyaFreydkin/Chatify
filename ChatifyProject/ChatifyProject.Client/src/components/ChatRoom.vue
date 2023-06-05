@@ -3,6 +3,7 @@ import axios from 'axios';
 import signalRService from '../services/SignalRService.js';
 import NavBar from '../components/NavBar.vue';
 import Footer from '../components/Footer.vue';
+import { VueTextToSpeech } from 'vue-text-to-speech';
 </script>
 
 <template>
@@ -33,6 +34,8 @@ import Footer from '../components/Footer.vue';
               <div class="chat-message-text">
                 {{ message.text }}
                 <span class="chat-message-timestamp">{{ message.time }}</span>
+                <vue-text-to-speech :text="message.text"></vue-text-to-speech>
+                 <button class="btn"><span class="fas fa-volume-up" @click="speakMessage(message.text)">READ</span></button>
               </div>
             </div>
           </div>
@@ -80,6 +83,14 @@ export default {
       console.log(user);
       this.$router.push(`/chatroom/${user}`);
     },
+    //speak message
+    speakMessage(text) {
+  if ('speechSynthesis' in window) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    speechSynthesis.speak(utterance);
+  } else {
+    console.log('Text-to-Speech wird nicht unterstützt.');
+  }},
     // Message
     onMessageReceive(message) {
       const time = new Date().toLocaleTimeString();

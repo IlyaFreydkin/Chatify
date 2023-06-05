@@ -35,7 +35,7 @@ import { VueTextToSpeech } from 'vue-text-to-speech';
                 {{ message.text }}
                 <span class="chat-message-timestamp">{{ message.time }}</span>
                 <vue-text-to-speech :text="message.text"></vue-text-to-speech>
-                 <button class="btn"><span class="fas fa-volume-up" @click="speakMessage(message.text)">ICON</span></button>
+                 <button class="btn"><span class="fas fa-volume-up" @click="speakMessage(message.text)">READ</span></button>
               </div>
             </div>
           </div>
