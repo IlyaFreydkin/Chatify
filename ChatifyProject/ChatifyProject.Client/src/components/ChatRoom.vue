@@ -90,8 +90,7 @@ export default {
     speechSynthesis.speak(utterance);
   } else {
     console.log('Text-to-Speech wird nicht unterstützt.');
-  }
-},
+  }},
     // Message
     onMessageReceive(message) {
       const time = new Date().toLocaleTimeString();

@@ -34,7 +34,7 @@ public class UserController : ControllerBase
         _isDevelopment = _env.IsDevelopment();
         _db = db;
     }
-    
+
     /// <summary>
     /// POST /api/user/login
     /// </summary>
@@ -47,62 +47,68 @@ public class UserController : ControllerBase
         var secret = Convert.FromBase64String(_config["Secret"]);
         var localAdmins = _config["LocalAdmins"].Split(",");
 
-        using var service = _isDevelopment && !string.IsNullOrEmpty(searchuser)
+        try
+        {
+            using var service = _isDevelopment && !string.IsNullOrEmpty(searchuser)
             ? AdService.Login(searchuser, searchpass, credentials.username)
             : AdService.Login(credentials.username, credentials.password);
 
-        var currentUser = service.CurrentUser;
-        if (currentUser is null) { return Unauthorized(); }
-        //register in login
-        var user = await _db.Users.FirstOrDefaultAsync(a => a.Name == credentials.username);
-        if (user is null) 
-        {
-            user = new User(credentials.username, credentials.password, "guest@gmail.com", Userrole.User);
-            await _db.Users.AddAsync(user);
-            try { await _db.SaveChangesAsync(); }
-            catch (DbUpdateException) { return BadRequest(); }
-        }
-        else if (!user.CheckPassword(credentials.password)) { return Unauthorized(); }
-
-        var role = localAdmins.Contains(currentUser.Cn)
-                        ? AdUserRole.Management.ToString() : currentUser.Role.ToString();
-        var group = (currentUser.Role, currentUser.Classes.Length > 0) switch
-        {
-            (AdUserRole.Pupil, true) => currentUser.Classes[0],
-            (AdUserRole.Pupil, false) => "Unknown class",
-            (AdUserRole.Teacher, _) => AdUserRole.Teacher.ToString(),
-            (AdUserRole.Management, _) => AdUserRole.Teacher.ToString(),
-            (_, _) => AdUserRole.Administration.ToString()
-        };
-        if (currentUser.Classes.Length > 0)
-        {
-            user.Group = currentUser.Classes[0];
-        }
-
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            // Payload for our JWT.
-            Subject = new ClaimsIdentity(new Claim[]
+            var currentUser = service.CurrentUser;
+            if (currentUser is null) { return Unauthorized(); }
+            //register in login
+            var user = await _db.Users.FirstOrDefaultAsync(a => a.Name == credentials.username);
+            if (user is null)
             {
+                user = new User(credentials.username, credentials.password, currentUser.Email, Userrole.User);
+                await _db.Users.AddAsync(user);
+                try { await _db.SaveChangesAsync(); }
+                catch (DbUpdateException) { return BadRequest(); }
+            }
+            else if (!user.CheckPassword(credentials.password)) { return Unauthorized(); }
+
+            var role = localAdmins.Contains(currentUser.Cn)
+                            ? AdUserRole.Management.ToString() : currentUser.Role.ToString();
+            var group = (currentUser.Role, currentUser.Classes.Length > 0) switch
+            {
+                (AdUserRole.Pupil, true) => currentUser.Classes[0],
+                (AdUserRole.Pupil, false) => "Unknown class",
+                (AdUserRole.Teacher, _) => AdUserRole.Teacher.ToString(),
+                (AdUserRole.Management, _) => AdUserRole.Teacher.ToString(),
+                (_, _) => AdUserRole.Administration.ToString()
+            };
+            if (currentUser.Classes.Length > 0)
+            {
+                user.Group = currentUser.Classes[0];
+            }
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                // Payload for our JWT.
+                Subject = new ClaimsIdentity(new Claim[]
+                {
                 new Claim(ClaimTypes.NameIdentifier, currentUser.Cn),
                 new Claim(ClaimTypes.Name, currentUser.Cn),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, role),
                 new Claim("Group", group)
-            }),
-            Expires = DateTime.UtcNow + lifetime,
-            SigningCredentials = new SigningCredentials(
-                new SymmetricSecurityKey(secret),
-                SecurityAlgorithms.HmacSha256Signature)
-        };
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        return Ok(new
-        {
-            Username = currentUser.Cn,
-            Role = role,
-            Group = group,
-            Token = tokenHandler.WriteToken(token)
-        });
+                }),
+                Expires = DateTime.UtcNow + lifetime,
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(secret),
+                    SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return Ok(new
+            {
+                Username = currentUser.Cn,
+                Role = role,
+                Group = group,
+                Token = tokenHandler.WriteToken(token)
+            });
+        }
+        catch (ApplicationException)  // Catch unknown User or invalid password from AdService
+        { return Unauthorized(); }
+
     }
 
     /// <summary>
@@ -154,6 +160,6 @@ public class UserController : ControllerBase
         return Ok();
     }
 
-    
+
 
 }

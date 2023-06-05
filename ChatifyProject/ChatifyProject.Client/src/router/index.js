@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import store from '../store.js'
 import HomeView from '../views/HomeView.vue'
 import ChatRoomView from '../views/ChatRoomView.vue'
-import WaitingRoomVue from '../views/WaitingRoomView.vue'
+import ChatRoom from '../components/ChatRoom.vue'
 import Service from '../views/ServiceView.vue'
 import Journal from '../views/JournalView.vue'
 import Contact from '../views/ContactView.vue'
@@ -25,11 +25,11 @@ const router = createRouter({
       component: ChatRoomView
     },
     {
-      path: '/waitingroom',
-      name: 'waitingroom',
+      path: '/chatroom/:user', // Anpassung: Parameter ":user" für die Benutzer-ID
+      name: 'chatroom/:user',
       meta: { authorize: true },
-      component: WaitingRoomVue
-    },   
+      component: ChatRoom
+    },
     {
       path: '/service',
       name: 'service',

@@ -17,11 +17,19 @@ class SignalRService {
             .withAutomaticReconnect()
             .configureLogging(SignalR.LogLevel.Information)
             .build();
-    }
+    } 
     async connect() {
-        await this.connection.start();
-        this.connected = true;
-    }
+        try {
+          if (this.connection.state === SignalR.HubConnectionState.Disconnected) {
+            await this.connection.start();
+            this.connected = true;
+          }
+        } catch (error) {
+          console.error("Failed to connect to SignalR hub:", error);
+          this.connected = false;
+          throw error;
+        }
+      }    
     subscribeEvent(type, callback) {
         this.connection.on(type, callback);
     }
@@ -31,16 +39,16 @@ class SignalRService {
         else
             this.connection.off(type, callback);
     }
-    async sendMessage(message) {
+    async sendMessageToAll(message, user) {
         if (!this.connected) { throw new Error("Invalid state. Not connected."); }
-        // SendMessage is corresponding to the C# Method in ChessHub.
-        await this.connection.invoke("SendMessage", message);
+        // SendMessageToAll is corresponding to the C# Method in SignalR Hub.
+        await this.connection.invoke("SendMessageToAll", message, user);
     }
-    async sendConnectedUsers() {
+    async requestConnectedUsers() {
         if (!this.connected) { throw new Error("Invalid state. Not connected."); }
-        const users = await this.connection.invoke("SendConnectedUsers");
-        return users;
-    }
+        // RequestConnectedUsers is corresponding to the C# Method in SignalR Hub.
+        await this.connection.invoke("RequestConnectedUsers");
+    }    
 }
 
 // Export a singleton (only 1 instance in the spa to make state management easier)
