@@ -29,8 +29,8 @@ import signalRService from '../services/SignalRService.js';
       <input type="email" placeholder="E-Mail" name="email" id="email_input" required>
     </div>
     <div class="telephone">
-      <label for="name"></label>
-      <input type="text" placeholder="Telefonnummer" name="telephone" id="telephone_input" required>
+      <label for="number"></label>
+      <input type="number" placeholder="Telefonnummer" name="telephone" id="telephone_input" required>
     </div>
    <div class="subject">
       <label for="suject"></label>
@@ -137,7 +137,7 @@ h1 {
 	width: 45%;
 }
 
-input[type='text'], [type='email'], select, textarea {
+input[type='text'], [type='email'], select, textarea, [type='number'] {
 	background: none;
   border: none;
 	border-bottom: solid 2px #474544;
@@ -161,7 +161,7 @@ input[type='text'], [type='email'], select, textarea {
 	transition: all 0.3s;
 }
 
-input[type='text']:focus, [type='email']:focus, textarea:focus {
+input[type='text']:focus, input[type='number']:focus, [type='email']:focus, textarea:focus {
 	outline: none;
 	padding: 0 0 0.875em 0;
 }
