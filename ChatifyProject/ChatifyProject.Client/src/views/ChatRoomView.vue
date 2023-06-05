@@ -48,7 +48,7 @@ import signalRService from '../services/SignalRService.js';
   display: flex;
   flex-direction: column;
   height: 100vh;
-   margin-bottom: 170px
+   margin-bottom: 250px;
 }
 
 
@@ -65,6 +65,7 @@ nav {
   flex-grow: 1;
   margin: 0.5rem;
   overflow-y: scroll;
+  
   
 }
 .input {
@@ -177,7 +178,8 @@ button:active {
 }
 
 footer {
-  margin-top: auto;
+  margin-top: auto; 
+ 
 }
 
 .new-message {
