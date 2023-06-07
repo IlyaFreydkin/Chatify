@@ -30,26 +30,6 @@ import Login from '../components/Login.vue';
                     Chat Room
                   </router-link>
                 </li>
-                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                  <router-link to="/webrtc" class="nav-link">
-                    WebRTC
-                  </router-link>
-                </li>
-                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                  <router-link to="/service" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    Service
-                  </router-link>
-                </li>
-                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                  <router-link to="/journal" class="nav-link">
-                    Journal
-                  </router-link>
-                </li>
-                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                  <router-link to="/contact" class="nav-link">
-                    Contact
-                  </router-link>
-                </li> 
               </ul>
             </div>  
 			<div class="navrow">

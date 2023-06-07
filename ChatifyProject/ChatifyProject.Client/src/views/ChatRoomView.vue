@@ -21,27 +21,9 @@ import { VueTextToSpeech } from 'vue-text-to-speech';
         </ul>
       </aside>
       <section class="chat-room">
-        <h3 class="chat-room-title"> {{this.selectedUser}} </h3>
+        <h3 class="chat-room-title"> Chatify </h3>
         <div class="chat-messages" ref="chatContainer">
-          <div v-for="(message, index) in messages" :key="index" class="chat-message">
-            <div class="avatar">
-              <img src="@/assets/Avatar.jpg" alt="Avatar">
-            </div>
-            <div class="chat-message-content">
-              <div class="chat-message-header">
-                <span class="chat-message-user">{{ message.username }}</span>
-              </div>
-              <div class="chat-message-text">
-                {{ message.text }}
-                <span class="chat-message-timestamp">{{ message.time }}</span>
-                <vue-text-to-speech :text="message.text"></vue-text-to-speech>
-                 <button class="btn"><span class="fas fa-volume-up" @click="speakMessage(message.text)">READ</span></button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="new-message">
-          <textarea v-model="newMessage" placeholder="Nachricht eingeben" @keydown.enter.prevent="sendMessageToAll"></textarea>
+          <img src="@/assets/Chat.png" alt="Chat" id="chatimg">
         </div>
       </section>
     </main>
@@ -205,6 +187,13 @@ export default {
   font-size: 1rem;
   font-weight: 500;
   margin-right: 0.5rem;
+}
+
+#chatimg {
+  width: 30%;
+  height: 100%;
+  display: block;
+  margin: auto;
 }
 
 .chat-message-timestamp {

@@ -35,7 +35,7 @@ import { VueTextToSpeech } from 'vue-text-to-speech';
                 {{ message.text }}
                 <span class="chat-message-timestamp">{{ message.time }}</span>
                 <vue-text-to-speech :text="message.text"></vue-text-to-speech>
-                 <button class="btn"><span class="fas fa-volume-up" @click="speakMessage(message.text)">READ</span></button>
+                 <button class="btn" @click="speakMessage(message.text)"><i class="gg-music"></i></button>
               </div>
             </div>
           </div>
@@ -316,5 +316,49 @@ nav {
   transform: rotate(45deg);
   top: 0;
   left: -2px
+}
+
+.btn {
+  margin-left: 5rem;
+  font-size: 1rem;
+  border-radius: 1rem;
+  color: purple;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.gg-music,
+.gg-music::after,
+.gg-music::before {
+    display: block;
+    box-sizing: border-box;
+    border: 2px solid
+}
+
+.gg-music {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: 0;
+    margin-top: -4px;
+    position: relative;
+    transform: skewY(-15deg) scale(var(--ggs,1));
+    width: 14px;
+    height: 16px
+}
+
+.gg-music::after,
+.gg-music::before {
+    content: "";
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    top: 9px;
+    left: -7px;
+    transform: skewY(15deg);
+    border-radius: 10px
+}
+
+.gg-music::after {
+    left: 5px
 }
 </style>

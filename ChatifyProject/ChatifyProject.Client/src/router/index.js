@@ -31,18 +31,6 @@ const router = createRouter({
       component: ChatRoom
     },
     {
-      path: '/service',
-      name: 'service',
-      meta: { authorize: false },
-      component: Service
-    },
-    {
-      path: '/journal',
-      name: 'journal',
-      meta: { authorize: false },
-      component: Journal
-    },
-    {
       path: '/contact',
       name: 'contact',
       meta: { authorize: false },

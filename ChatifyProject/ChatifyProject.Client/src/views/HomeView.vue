@@ -9,7 +9,7 @@ import Footer from '../components/Footer.vue';
         <div class="container">
             <h1>Welcome to our Video Chatting Platform!</h1>
             <p>Join our community and start chatting with people from around the world.</p>
-            <router-link to="/webrtc">
+            <router-link to="/chatroom">
 				<button> Start Video Chatting </button>
 			</router-link>
         </div>  
