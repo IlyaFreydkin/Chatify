@@ -28,9 +28,6 @@ import { VueTextToSpeech } from 'vue-text-to-speech';
       </section>
     </main>
     <Footer></Footer>
-    <div class="scroll-to-top" @click="scrollToTop">
-      <i class="gg-arrow-long-up"></i>
-    </div>
   </div>
 </template>
 
@@ -54,9 +51,6 @@ export default {
     }
   },
   unmounted() {
-  },
-  scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   },
   methods: {
     selectUser(user) {
@@ -104,20 +98,6 @@ export default {
         this.newMessage = "";
       }
     },
-    scrollToTop() {
-      const chatContainer = this.$refs.chatContainer;
-      chatContainer.scrollTop = 0;
-    },
-    scrollToBottom() {
-      const chatContainer = this.$refs.chatContainer;
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    },
-  },
-  updated() {
-    this.scrollToBottom();
-  },
-  created() {
-    this.selectedUser = this.$route.params.user;
   },
 };
 </script>
