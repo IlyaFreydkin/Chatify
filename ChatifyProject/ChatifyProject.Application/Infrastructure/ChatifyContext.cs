@@ -54,18 +54,38 @@ namespace ChatifyProject.Application.Infrastructure
                 user: ilya, 
                 description: "Ich mag Pizza"
             );
+
             var ahmed = new User(
                 name: "Ahmed",
                 password: "1111",
                 email: "ahm22106@spengergasse.at",
                 role: Userrole.User
-           );
-           new Userprofile(
+            );
+            new Userprofile(
                 firstname: "Ahmed",
                 lastname: "Khalid",
                 user: ahmed,
                 description: "Ich mag Dönner"
-           );
+            );
+
+            //var richard = new User(
+            //    name: "Richard",
+            //    password: "1111",
+            //    email: "liu22291@spengergasse.at",
+            //    role: Userrole.Admin
+            //);
+            //new Userprofile(
+            //    firstname: "Richard",
+            //    lastname: "Liu",
+            //    user: richard,
+            //    description: "Ich mag Reis"
+            //);
+
+            Users.Add(ilya);
+            Users.Add(ahmed);
+            //Users.Add(richard);
+
+            SaveChanges();
         }
 
         /// <summary>
