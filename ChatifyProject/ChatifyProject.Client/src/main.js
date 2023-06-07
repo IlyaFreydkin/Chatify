@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import axios from "axios";
+import { VueTextToSpeech } from 'vue-text-to-speech';
 import process from 'node:process'
 import App from './App.vue'
 import router from './router'
