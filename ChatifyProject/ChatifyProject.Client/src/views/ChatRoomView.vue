@@ -54,49 +54,22 @@ export default {
   },
   methods: {
     selectUser(user) {
-      this.selectedUser = user;
-      this.messages = [];
-      console.log(user);
-      this.$router.push(`/chatroom/${user}`);
+        this.selectedUser = user;
+        this.messages = [];
+        console.log(user);
+        this.$router.push(`/chatroom/${user}`);
     },
     //speak message
     speakMessage(text) {
-  if ('speechSynthesis' in window) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    speechSynthesis.speak(utterance);
-  } else {
-    console.log('Text-to-Speech wird nicht unterstützt.');
-  }
-},
-    // Message
-    onMessageReceive(message) {
-      const time = new Date().toLocaleTimeString();
-      if (message.message == undefined) {
-        this.messages.push({ text: message, time: time, username: "System" });
-      }
-      else {
-        if (
-          this.selectedUser === this.$store.state.userdata.username ||
-          message.username === this.selectedUser ||
-          message.username === this.$store.state.userdata.username
-        ) {
-          this.messages.push({ text: message.message, time: time, username: message.username });
-        }
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        speechSynthesis.speak(utterance);
+      } else {
+        console.log('Text-to-Speech wird nicht unterstützt.');
       }
     },
     onReceiveConnectedUsers(users) {
       this.connectedUsers = users;
-    },
-    sendMessageToAll() {
-      if (this.newMessage.trim() !== '') { // check if the message is not empty
-        if (this.selectedUser === this.$store.state.userdata.username) {
-          signalRService.sendMessageToAll(this.newMessage);
-        } else {
-          signalRService.sendMessageToAll(this.newMessage, this.selectedUser);
-          signalRService.sendMessageToAll(this.newMessage, this.$store.state.userdata.username);
-        }
-        this.newMessage = "";
-      }
     },
   },
 };
