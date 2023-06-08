@@ -21,7 +21,7 @@ import { VueTextToSpeech } from 'vue-text-to-speech';
         </ul>
       </aside>
       <section class="chat-room">
-        <h3 class="chat-room-title"> {{this.selectedUser}} </h3>
+        <h3 class="chat-room-title"> {{ chatRoomTitle }} </h3>
         <div class="chat-messages" ref="chatContainer">
           <div v-for="(message, index) in messages" :key="index" class="chat-message">
             <div class="avatar">
@@ -135,6 +135,11 @@ export default {
   },
   created() {
     this.selectedUser = this.$route.params.user;
+  },
+  computed: {
+    chatRoomTitle() {
+      return this.selectedUser || '';
+    },
   },
 };
 </script>

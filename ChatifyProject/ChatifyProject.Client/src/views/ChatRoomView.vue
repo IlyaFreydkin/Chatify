@@ -14,7 +14,7 @@ import { VueTextToSpeech } from 'vue-text-to-speech';
         <h3>Active Users</h3>
         <ul>
           <div v-for="user in connectedUsers" :key="user" @click="selectUser(user)">
-            <li v-if="user !== $store.state.userdata.username">
+            <li v-if="user != $store.state.userdata.username">
               {{ user }}
             </li>
           </div>
@@ -43,7 +43,6 @@ export default {
   },
   async mounted() {
     try {
-      signalRService.subscribeEvent("ReceiveMessage", this.onMessageReceive);
       signalRService.subscribeEvent("ReceiveConnectedUsers", this.onReceiveConnectedUsers);
       signalRService.requestConnectedUsers();
     } catch (e) {
